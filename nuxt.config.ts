@@ -19,13 +19,43 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'PROSEN - Sécurité Professionnelle',
+      titleTemplate: '%s | PROSEN Sécurité',
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'description', content: 'PROSEN, votre partenaire de confiance en sécurité professionnelle. Services de gardiennage, surveillance, protection et sécurité électronique.' },
+        { name: 'format-detection', content: 'telephone=no' },
+        // OpenGraph
+        { property: 'og:site_name', content: 'PROSEN Sécurité' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: 'https://prosen.sn' },
+        { property: 'og:title', content: 'PROSEN - Solutions de Sécurité Professionnelle' },
+        { property: 'og:description', content: 'Solutions de sécurité complètes pour entreprises et particuliers. Gardiennage, surveillance, protection rapprochée et plus.' },
+        { property: 'og:image', content: '/images/og-image.jpg' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        // Twitter Card
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:site', content: '@prosensecurity' },
+        { name: 'twitter:title', content: 'PROSEN - Solutions de Sécurité Professionnelle' },
+        { name: 'twitter:description', content: 'Solutions de sécurité complètes pour entreprises et particuliers.' },
+        { name: 'twitter:image', content: '/images/twitter-card.jpg' },
+        // Thème et couleurs
+        { name: 'theme-color', content: '#23c55e' }
       ],
-      // Ajoutez cette ligne pour s'assurer que les styles sont chargés correctement
+      link: [
+        // Favicon
+        { rel: 'icon', type: 'image/x-icon', href: '/images/logo.ico' },
+        // Favicons différentes tailles
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/images/apple-touch-icon.png' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/images/favicon-32x32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/images/favicon-16x16.png' },
+        // Manifest
+        { rel: 'manifest', href: '/site.webmanifest' }
+      ],
       htmlAttrs: {
-        lang: 'fr'
+        lang: 'fr',
+        dir: 'ltr'
       }
     }
   },

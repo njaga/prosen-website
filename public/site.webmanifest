@@ -1,0 +1,38 @@
+{
+  "name": "PROSEN Sécurité Professionnelle",
+  "short_name": "PROSEN",
+  "description": "Solutions de sécurité professionnelle au Sénégal",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#23c55e",
+  "categories": ["security", "business", "services"],
+  "icons": [
+    {
+      "src": "/images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nos Services",
+      "url": "/services"
+    },
+    {
+      "name": "Contact",
+      "url": "/contact"
+    },
+    {
+      "name": "Devis",
+      "url": "/devis"
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 <template>
   <div>
+    <SEO 
+      title="Nos Services"
+      description="Découvrez notre gamme complète de services de sécurité professionnels : gardiennage, surveillance, protection rapprochée et plus encore."
+    />
     <!-- Hero Section -->
     <section class="relative min-h-[70vh] flex items-center bg-[#111829]">
       <div class="absolute inset-0">

@@ -1,5 +1,9 @@
 <template>
   <div>
+    <SEO 
+      title="À Propos"
+      description="Découvrez PROSEN, entreprise leader dans le secteur de la sécurité au Sénégal. Notre expertise et notre engagement font notre force depuis plus de 15 ans."
+    />
     <!-- Hero Section -->
     <section class="relative py-32 mb-16 bg-[#111829]">
       <div class="absolute inset-0">

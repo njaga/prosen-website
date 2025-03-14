@@ -1,4 +1,9 @@
 <template>
+  <div>
+    <SEO 
+      title="Politique de Confidentialité"
+      description="Politique de confidentialité de PROSEN. Découvrez comment nous protégeons vos données personnelles."
+    />
     <div>
         <!-- Hero Section -->
         <section class="relative min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-[#111829] via-[#1a2436] to-[#23c55e]/20">
@@ -284,6 +289,11 @@
                                     <GlobeAltIcon class="w-5 h-5 text-[#23c55e] mr-2" />
                                     <span>Sites web</span>
                                 </div>
+                                <div class="flex items
+                                -center text-gray-300">
+                                    <PencilIcon class="w-5 h-5 text-[#23c55e] mr-2" />
+                                    <span>Design</span>
+                                </div>
                                 <div class="flex items-center text-gray-300">
                                     <CloudArrowUpIcon class="w-5 h-5 text-[#23c55e] mr-2" />
                                     <span>Solutions Cloud</span>
@@ -322,9 +332,11 @@
             </div>
         </section>
     </div>
+  </div>
 </template>
 
 <script setup>
+import { PencilIcon } from '@heroicons/vue/24/outline';
 import {
     ArrowRightIcon,
     ShieldCheckIcon,

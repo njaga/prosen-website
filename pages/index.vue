@@ -1,5 +1,9 @@
 <template>
   <div>
+    <SEO 
+      title="Accueil"
+      description="PROSEN, votre partenaire de confiance en sécurité professionnelle. Services de gardiennage, surveillance, protection et solutions de sécurité sur mesure."
+    />
     <Hero />
 
     <!-- Services Vedettes -->

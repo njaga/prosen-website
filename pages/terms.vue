@@ -1,4 +1,9 @@
 <template>
+  <div>
+    <SEO 
+      title="Conditions Générales"
+      description="Conditions générales d'utilisation des services PROSEN. Consultez nos termes et conditions."
+    />
     <div>
         <!-- Hero Section -->
         <section
@@ -115,6 +120,11 @@
                                     <GlobeAltIcon class="w-5 h-5 text-[#23c55e] mr-2" />
                                     <span>Sites web</span>
                                 </div>
+                                <div class="flex items
+                                -center text-gray-300">
+                                    <CurrencyDollarIcon class="w-5 h-5 text-[#23c55e] mr-2" />
+                                    <span>Marketing Digital</span>
+                                </div>
                                 <div class="flex items-center text-gray-300">
                                     <CloudArrowUpIcon class="w-5 h-5 text-[#23c55e] mr-2" />
                                     <span>Solutions Cloud</span>
@@ -155,6 +165,7 @@
             </div>
         </section>
     </div>
+  </div>
 </template>
 
 <script setup>

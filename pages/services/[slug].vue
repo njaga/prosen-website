@@ -1,5 +1,10 @@
 <template>
   <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <SEO 
+      :title="service.title"
+      :description="service.description"
+      :image="service.image || '/images/og-image.jpg'"
+    />
     <!-- Hero Section -->
     <section class="relative py-24 bg-[#111829] overflow-hidden">
       <div class="absolute inset-0 bg-[url('/images/pattern.png')] opacity-10"></div>
