@@ -10,13 +10,13 @@
         />
         <div class="absolute inset-0 bg-gradient-to-r from-[#111829] via-[#111829]/90 to-[#111829]/80"></div>
       </div>
-      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl">
+      <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
+        <div class="max-w-3xl mx-auto text-center md:text-left">
           <span 
             v-motion
             :initial="{ opacity: 0, x: -20 }"
             :enter="{ opacity: 1, x: 0 }"
-            class="inline-block px-4 py-1 bg-[#23c55e]/20 text-[#23c55e] rounded-full text-sm font-semibold mb-6"
+            class="inline-block px-4 py-1.5 bg-[#23c55e]/20 text-[#23c55e] rounded-full text-sm font-semibold mb-6"
           >
             Solutions de Sécurité Professionnelles
           </span>
@@ -24,16 +24,17 @@
             v-motion
             :initial="{ opacity: 0, y: 20 }"
             :enter="{ opacity: 1, y: 0, transition: { delay: 200 } }"
-            class="text-5xl font-bold text-white mb-6 leading-tight"
+            class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"
           >
-            Des services de sécurité <br/>
-            <span class="text-[#23c55e]">sur mesure</span> pour votre entreprise
+            Des services de sécurité
+            <span class="block md:inline text-[#23c55e]">sur mesure</span> 
+            pour votre entreprise
           </h1>
           <p 
             v-motion
             :initial="{ opacity: 0 }"
             :enter="{ opacity: 1, transition: { delay: 400 } }"
-            class="text-xl text-gray-300 mb-8"
+            class="text-base md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto md:mx-0"
           >
             Découvrez notre gamme complète de solutions adaptées à vos besoins spécifiques
           </p>
@@ -41,27 +42,24 @@
             v-motion
             :initial="{ opacity: 0, y: 20 }"
             :enter="{ opacity: 1, y: 0, transition: { delay: 600 } }"
-            class="flex flex-wrap gap-4"
+            class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
           >
-            <a href="#services" class="inline-flex items-center px-8 py-4 bg-[#23c55e] text-white rounded-xl hover:bg-[#1ea550] transition-colors">
+            <a 
+              href="#services" 
+              class="w-full sm:w-auto inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 bg-[#23c55e] text-white rounded-xl hover:bg-[#1ea550] transition-colors"
+            >
               <span class="font-semibold">Découvrir nos services</span>
               <ArrowDownIcon class="w-5 h-5 ml-2" />
             </a>
-            <NuxtLink to="/contact" class="inline-flex items-center px-8 py-4 border-2 border-white text-white rounded-xl hover:bg-white hover:text-[#111829] transition-colors">
+            <NuxtLink 
+              to="/contact" 
+              class="w-full sm:w-auto inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-white text-white rounded-xl hover:bg-white hover:text-[#111829] transition-colors"
+            >
               <span class="font-semibold">Nous contacter</span>
               <ArrowRightIcon class="w-5 h-5 ml-2" />
             </NuxtLink>
           </div>
         </div>
-      </div>
-      <div 
-        v-motion="{
-          initial: { opacity: 0, y: 20 },
-          delay: 200
-        }"
-        class="text-center"
-      >
-        <h1 class="text-5xl font-bold text-white mb-6">Nos Services</h1>
       </div>
     </section>
 
