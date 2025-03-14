@@ -1,5 +1,6 @@
 <template>
-  <section class="relative min-h-screen">
+  <!-- Ajouter overflow-x-hidden à la section principale -->
+  <section class="relative min-h-screen overflow-x-hidden">
     <!-- Image de fond avec effet parallaxe -->
     <div class="absolute inset-0 w-full h-full">
       <img
@@ -11,10 +12,11 @@
       <div class="absolute inset-0 bg-gradient-to-r from-[#111829]/95 to-[#111829]/80"></div>
     </div>
 
-    <!-- Contenu principal -->
-    <div class="relative min-h-screen flex items-center">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
+    <!-- Modifier la div du contenu principal pour éviter le débordement -->
+    <div class="relative min-h-screen flex items-center overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <!-- Ajouter des classes pour gérer le responsive -->
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mx-auto">
           <!-- Texte à gauche -->
           <div class="text-left">
             <div 
@@ -32,7 +34,7 @@
               class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
             >
               Votre Partenaire<br/>
-              <span class="text-[#23c55e]">Sécurité</span> Privée de Confiance
+              <span class="text-[#23c55e]">Sécurité Privée</span> de Confiance
             </h1>
             <p 
               v-motion
@@ -65,12 +67,12 @@
             </div>
           </div>
 
-          <!-- Stats à droite -->
+          <!-- Ajuster les stats pour éviter le débordement -->
           <div 
             v-motion
             :initial="{ opacity: 0, x: 50 }"
             :enter="{ opacity: 1, x: 0, transition: { delay: 800 } }"
-            class="hidden md:grid grid-cols-2 gap-6"
+            class="hidden md:grid grid-cols-2 gap-4 md:gap-6 w-full"
           >
             <div 
               v-for="(stat, index) in stats" 
@@ -120,5 +122,15 @@ const stats = [
 <style scoped>
 .backdrop-blur-lg {
   backdrop-filter: blur(8px);
+}
+
+/* Ajouter des styles pour gérer le overflow */
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>

@@ -21,15 +21,31 @@
               :key="item.path"
               :to="item.path"
               class="relative group px-3 py-2 text-gray-700 hover:text-[#23c55e] transition-colors duration-200"
+              :class="{ 'text-[#23c55e]': $route.path === item.path }"
             >
               <span>{{ item.name }}</span>
-              <span class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
+              <span 
+                class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform transition-transform duration-200"
+                :class="$route.path === item.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
+              ></span>
             </NuxtLink>
             <NuxtLink
               to="/contact"
-              class="px-6 py-2.5 bg-[#23c55e] text-white rounded-lg hover:bg-[#1ea550] transition-colors duration-200"
+              class="relative group px-3 py-2 text-gray-700 hover:text-[#23c55e] transition-colors duration-200"
+              :class="{ 'text-[#23c55e]': $route.path === '/contact' }"
             >
-              Nous Contacter
+              <span>Contact</span>
+              <span 
+                class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform transition-transform duration-200"
+                :class="$route.path === '/contact' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
+              ></span>
+            </NuxtLink>
+            <NuxtLink
+              to="/devis"
+              class="px-6 py-2.5 bg-[#23c55e] text-white rounded-lg hover:bg-[#1ea550] transition-colors duration-200"
+              :class="{ 'bg-[#1ea550]': $route.path === '/devis' }"
+            >
+              Demander un devis
             </NuxtLink>
           </div>
 
@@ -54,9 +70,26 @@
               :key="item.path"
               :to="item.path"
               class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+              :class="{ 'bg-gray-100 text-[#23c55e]': $route.path === item.path }"
               @click="isMenuOpen = false"
             >
               {{ item.name }}
+            </NuxtLink>
+            <NuxtLink 
+              to="/contact"
+              class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+              :class="{ 'bg-gray-100 text-[#23c55e]': $route.path === '/contact' }"
+              @click="isMenuOpen = false"
+            >
+              Contact
+            </NuxtLink>
+            <NuxtLink
+              to="/devis"
+              class="px-4 py-2 bg-[#23c55e] text-white rounded-lg hover:bg-[#1ea550]"
+              :class="{ 'bg-[#1ea550]': $route.path === '/devis' }"
+              @click="isMenuOpen = false"
+            >
+              Demander un devis
             </NuxtLink>
           </div>
         </div>
@@ -171,7 +204,6 @@ const menuItems = [
 const footerLinks = [
   { name: 'Nos Services', path: '/services' },
   { name: 'À Propos', path: '/about' },
-  { name: 'Carrières', path: '/careers' },
   { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' }
 ]

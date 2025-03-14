@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <section class="relative py-32 bg-[#111829]">
+    <section class="relative py-32 mb-16 bg-[#111829]">
       <div class="absolute inset-0">
         <img 
           src="/images/about-hero.jpg" 
