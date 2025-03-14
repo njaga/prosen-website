@@ -64,7 +64,7 @@
         </div>
 
         <!-- Newsletter Section -->
-        <div class="mt-24 bg-[#111829] rounded-3xl p-12 relative overflow-hidden">
+        <div class="mt-24 bg-[#111829] rounded-3xl p-6 md:p-12 relative overflow-hidden">
           <div class="absolute inset-0 bg-[url('/images/pattern.png')] opacity-10"></div>
           <div class="relative">
             <div class="max-w-2xl mx-auto text-center">
@@ -72,7 +72,7 @@
               <p class="text-gray-300 mb-8">
                 Abonnez-vous à notre newsletter pour recevoir nos derniers articles et actualités.
               </p>
-              <form class="flex space-x-4 max-w-md mx-auto">
+              <form class="flex flex-col sm:flex-row gap-4 sm:space-x-4 max-w-md mx-auto">
                 <input 
                   type="email" 
                   placeholder="Votre adresse email" 
@@ -80,7 +80,7 @@
                 >
                 <button 
                   type="submit"
-                  class="px-6 py-3 bg-[#23c55e] text-white rounded-xl hover:bg-[#1ea550] transition-colors duration-300"
+                  class="px-6 py-3 bg-[#23c55e] text-white rounded-xl hover:bg-[#1ea550] transition-colors duration-300 whitespace-nowrap"
                 >
                   S'abonner
                 </button>
