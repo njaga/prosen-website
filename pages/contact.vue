@@ -133,6 +133,15 @@
                 </div>
 
                 <form @submit.prevent="handleSubmit" class="space-y-6">
+                  <!-- Affichage du message de statut -->
+                  <div v-if="submitStatus.message" 
+                       :class="[
+                         'p-4 rounded-xl mb-4', 
+                         submitStatus.success ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'
+                       ]">
+                    {{ submitStatus.message }}
+                  </div>
+                  
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nom complet</label>
@@ -206,6 +215,11 @@ import {
   ArrowRightIcon
 } from '@heroicons/vue/24/solid'
 
+import SpinnerIcon from '~/components/SpinnerIcon.vue'
+import { useNuxtApp } from '#app'
+
+const { $analytics } = useNuxtApp()
+
 const form = ref({
   name: '',
   email: '',
@@ -215,6 +229,10 @@ const form = ref({
 });
 
 const isSubmitting = ref(false);
+const submitStatus = ref({
+  success: null,
+  message: ''
+});
 
 const services = [
   { value: 'surveillance', label: 'Surveillance & Gardiennage' },
@@ -229,23 +247,51 @@ const services = [
 
 const handleSubmit = async () => {
   isSubmitting.value = true;
+  submitStatus.value = { success: null, message: '' };
 
   try {
-    // Simulation d'envoi du formulaire
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Envoi du formulaire via l'API SendGrid
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form.value),
+    });
 
-    // Réinitialisation du formulaire
-    form.value = {
-      name: '',
-      email: '',
-      phone: '',
-      service: '',
-      message: ''
-    };
-
-    alert('Votre message a été envoyé avec succès !');
+    const result = await response.json();
+    
+    if (result.success) {
+      // Réinitialisation du formulaire en cas de succès
+      form.value = {
+        name: '',
+        email: '',
+        phone: '',
+        service: '',
+        message: ''
+      };
+      
+      submitStatus.value = {
+        success: true,
+        message: 'Votre message a été envoyé avec succès !'
+      };
+      
+      // Suivre l'événement de soumission réussie
+      if ($analytics) {
+        $analytics.trackEvent('Formulaire', 'Soumission', 'Contact', 1);
+      }
+    } else {
+      submitStatus.value = {
+        success: false,
+        message: result.message || 'Une erreur est survenue. Veuillez réessayer.'
+      };
+    }
   } catch (error) {
-    alert('Une erreur est survenue. Veuillez réessayer.');
+    console.error('Erreur lors de l\'envoi du formulaire:', error);
+    submitStatus.value = {
+      success: false,
+      message: 'Une erreur est survenue. Veuillez réessayer.'
+    };
   } finally {
     isSubmitting.value = false;
   }

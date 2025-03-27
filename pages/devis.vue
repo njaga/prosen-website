@@ -41,6 +41,15 @@
           :enter="{ opacity: 1, y: 0 }"
           class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-8 border border-gray-100/50 backdrop-blur-sm"
         >
+          <!-- Affichage du message de statut -->
+          <div v-if="submitStatus.message" 
+               :class="[
+                 'p-4 rounded-xl mb-6', 
+                 submitStatus.success ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'
+               ]">
+            {{ submitStatus.message }}
+          </div>
+          
           <form @submit.prevent="handleSubmit" class="space-y-8">
             <!-- Informations personnelles -->
             <div class="space-y-6">
@@ -191,6 +200,9 @@ import {
   ShieldCheckIcon,
   ArrowRightIcon
 } from '@heroicons/vue/24/solid'
+import { useNuxtApp } from '#app'
+
+const { $analytics } = useNuxtApp()
 
 const form = ref({
   firstName: '',
@@ -207,6 +219,10 @@ const form = ref({
 });
 
 const isSubmitting = ref(false);
+const submitStatus = ref({
+  success: null,
+  message: ''
+});
 
 const services = [
   { value: 'surveillance', label: 'Surveillance & Gardiennage' },
@@ -237,29 +253,60 @@ const schedules = [
 
 const handleSubmit = async () => {
   isSubmitting.value = true;
+  submitStatus.value = { success: null, message: '' };
   
   try {
-    // Simulation d'envoi du formulaire
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Envoi du formulaire via l'API
+    const response = await fetch('/api/devis', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form.value),
+    });
+
+    const result = await response.json();
     
-    // Réinitialisation du formulaire
-    form.value = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      company: '',
-      service: '',
-      siteType: '',
-      surface: '',
-      schedule: '',
-      startDate: '',
-      details: ''
-    };
-    
-    alert('Votre demande de devis a été envoyée avec succès ! Nous vous contacterons dans les plus brefs délais.');
+    if (result.success) {
+      // Réinitialisation du formulaire
+      form.value = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        company: '',
+        service: '',
+        siteType: '',
+        surface: '',
+        schedule: '',
+        startDate: '',
+        details: ''
+      };
+      
+      submitStatus.value = {
+        success: true,
+        message: 'Votre demande de devis a été envoyée avec succès ! Nous vous contacterons dans les plus brefs délais.'
+      };
+      
+      // Faire défiler vers le haut pour voir la notification
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Suivre l'événement de soumission réussie
+      if ($analytics) {
+        $analytics.trackEvent('Formulaire', 'Soumission', 'Devis', 1);
+      }
+    } else {
+      submitStatus.value = {
+        success: false,
+        message: result.message || 'Une erreur est survenue. Veuillez réessayer.'
+      };
+    }
   } catch (error) {
-    alert('Une erreur est survenue. Veuillez réessayer.');
+    console.error('Erreur lors de l\'envoi du formulaire:', error);
+    submitStatus.value = {
+      success: false,
+      message: 'Une erreur est survenue. Veuillez réessayer.'
+    };
   } finally {
     isSubmitting.value = false;
   }

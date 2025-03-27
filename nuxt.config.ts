@@ -90,7 +90,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     // '/blog': { redirect: '/' }, // Commentez ou supprimez cette ligne
-    '/careers': { redirect: '/' }
+    //'/careers': { redirect: '/' }
   },
 
   compatibilityDate: '2025-03-13',
@@ -100,7 +100,20 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
     prerender: {
       crawlLinks: true,
-      routes: ['/']
+      routes: [
+        '/',
+        '/about',
+        '/services',
+        '/devis',
+        '/contact',
+        '/privacy',
+        '/terms',
+        '/careers',
+      ]
+    },
+    output: {
+      dir: '.output',
+      publicDir: '.output/public'
     }
   }
 })
