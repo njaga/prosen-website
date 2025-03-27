@@ -90,7 +90,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     // '/blog': { redirect: '/' }, // Commentez ou supprimez cette ligne
-    //'/careers': { redirect: '/' }
+    '/careers': { redirect: '/carrieres' }
   },
 
   compatibilityDate: '2025-03-13',
@@ -108,7 +108,7 @@ export default defineNuxtConfig({
         '/contact',
         '/privacy',
         '/terms',
-        '/careers',
+        '/carrieres',
       ]
     },
     output: {

@@ -23,7 +23,7 @@
           <div class="md:flex">
             <!-- Image du produit -->
             <div class="md:w-1/2">
-              <div class="relative h-96 md:h-full">
+              <div class="relative h-72 sm:h-80 md:h-full">
                 <img :src="product.image" :alt="product.name" class="w-full h-full object-cover object-center" />
                 <div v-if="!product.inStock" class="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                   Rupture de stock
@@ -35,26 +35,26 @@
             </div>
 
             <!-- Informations du produit -->
-            <div class="md:w-1/2 p-8">
-              <h1 class="text-2xl font-bold text-[#111829] mb-2">{{ product.name }}</h1>
-              <div class="inline-block bg-[#23c55e]/10 text-[#23c55e] px-3 py-1.5 rounded-full text-sm font-semibold mb-6">Prix sur devis</div>
+            <div class="md:w-1/2 p-6 md:p-8">
+              <h1 class="text-xl sm:text-2xl font-bold text-[#111829] mb-2">{{ product.name }}</h1>
+              <div class="inline-block bg-[#23c55e]/10 text-[#23c55e] px-3 py-1.5 rounded-full text-sm font-semibold mb-4 md:mb-6">Prix sur devis</div>
 
-              <div class="border-t border-gray-200 pt-6 mb-6">
-                <p class="text-gray-700 mb-6">{{ product.description }}</p>
+              <div class="border-t border-gray-200 pt-4 md:pt-6 mb-4 md:mb-6">
+                <p class="text-gray-700 mb-4 md:mb-6 text-sm sm:text-base">{{ product.description }}</p>
 
-                <div class="flex items-center mb-6">
-                  <span class="mr-2 font-medium text-gray-700">Disponibilité:</span>
-                  <span v-if="product.inStock" class="text-green-600 flex items-center">
-                    <CheckCircleIcon class="w-5 h-5 mr-1" /> En stock
+                <div class="flex items-center mb-3 md:mb-6">
+                  <span class="mr-2 font-medium text-gray-700 text-sm sm:text-base">Disponibilité:</span>
+                  <span v-if="product.inStock" class="text-green-600 flex items-center text-sm sm:text-base">
+                    <CheckCircleIcon class="w-4 h-4 sm:w-5 sm:h-5 mr-1" /> En stock
                   </span>
-                  <span v-else class="text-red-600 flex items-center">
-                    <XCircleIcon class="w-5 h-5 mr-1" /> Rupture de stock
+                  <span v-else class="text-red-600 flex items-center text-sm sm:text-base">
+                    <XCircleIcon class="w-4 h-4 sm:w-5 sm:h-5 mr-1" /> Rupture de stock
                   </span>
                 </div>
 
-                <div class="mb-6">
-                  <span class="font-medium text-gray-700">Catégorie:</span>
-                  <span class="ml-2 text-gray-600">{{ getCategoryName(product.category) }}</span>
+                <div class="mb-4 md:mb-6">
+                  <span class="font-medium text-gray-700 text-sm sm:text-base">Catégorie:</span>
+                  <span class="ml-2 text-gray-600 text-sm sm:text-base">{{ getCategoryName(product.category) }}</span>
                 </div>
               </div>
 
@@ -68,7 +68,7 @@
                 Demander un devis
               </button>
 
-              <div class="mt-6 text-gray-500 text-sm">
+              <div class="mt-4 md:mt-6 text-gray-500 text-xs sm:text-sm">
                 <p>Notre équipe commerciale vous contactera pour vous proposer un devis personnalisé.</p>
               </div>
             </div>
@@ -76,9 +76,9 @@
         </div>
 
         <!-- Produits similaires -->
-        <div class="mt-16">
-          <h2 class="text-2xl font-bold text-[#111829] mb-8">Produits similaires</h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="mt-12 md:mt-16">
+          <h2 class="text-xl sm:text-2xl font-bold text-[#111829] mb-6 md:mb-8">Produits similaires</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             <div 
               v-for="relatedProduct in relatedProducts" 
               :key="relatedProduct.id"
@@ -87,12 +87,12 @@
               <div class="aspect-w-1 aspect-h-1 relative">
                 <img :src="relatedProduct.image" :alt="relatedProduct.name" class="w-full h-48 object-cover object-center group-hover:scale-105 transition-transform duration-500" />
               </div>
-              <div class="p-5">
+              <div class="p-4 sm:p-5">
                 <div class="flex justify-between items-start">
-                  <h3 class="text-lg font-semibold text-[#111829] mb-2 group-hover:text-[#23c55e] transition-colors">{{ relatedProduct.name }}</h3>
-                  <span class="text-[#23c55e] text-sm font-medium px-2 py-1 bg-[#23c55e]/10 rounded">Sur devis</span>
+                  <h3 class="text-base sm:text-lg font-semibold text-[#111829] mb-2 group-hover:text-[#23c55e] transition-colors">{{ relatedProduct.name }}</h3>
+                  <span class="text-[#23c55e] text-xs sm:text-sm font-medium px-2 py-1 bg-[#23c55e]/10 rounded ml-2 flex-shrink-0">Sur devis</span>
                 </div>
-                <div class="flex justify-between items-center mt-4">
+                <div class="flex flex-wrap sm:flex-nowrap justify-between items-center gap-2 mt-4">
                   <NuxtLink 
                     :to="`/boutique/${relatedProduct.id}`" 
                     class="text-[#23c55e] hover:text-[#1ea550] text-sm font-medium"
@@ -101,7 +101,7 @@
                   </NuxtLink>
                   <button 
                     @click="openOrderModal(relatedProduct)"
-                    class="bg-[#23c55e] hover:bg-[#1ea550] text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+                    class="bg-[#23c55e] hover:bg-[#1ea550] text-white py-2 px-3 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition-colors w-full sm:w-auto mt-2 sm:mt-0"
                     :disabled="!relatedProduct.inStock"
                     :class="{'opacity-50 cursor-not-allowed': !relatedProduct.inStock}"
                   >
@@ -119,9 +119,9 @@
     <transition name="fade">
       <div v-if="showOrderModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black opacity-50" @click="showOrderModal = false"></div>
-        <div class="relative bg-white rounded-xl shadow-2xl max-w-lg w-full mx-auto p-6 z-10">
+        <div class="relative bg-white rounded-xl shadow-2xl max-w-lg w-full mx-auto p-4 sm:p-6 z-10 max-h-[90vh] overflow-y-auto">
           <div class="flex justify-between items-start mb-4">
-            <h3 class="text-xl font-bold text-[#111829]">Demande de devis : {{ selectedProduct?.name }}</h3>
+            <h3 class="text-lg sm:text-xl font-bold text-[#111829]">Demande de devis : {{ selectedProduct?.name }}</h3>
             <button @click="showOrderModal = false" class="text-gray-400 hover:text-gray-500">
               <XMarkIcon class="w-6 h-6" />
             </button>
@@ -136,8 +136,8 @@
           </div>
 
           <form @submit.prevent="submitOrder" class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-              <div class="col-span-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="col-span-1 sm:col-span-2">
                 <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">Quantité</label>
                 <input 
                   type="number" 
@@ -192,7 +192,7 @@
                 />
               </div>
               
-              <div class="col-span-2">
+              <div class="col-span-1 sm:col-span-2">
                 <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message (optionnel)</label>
                 <textarea 
                   id="message" 
@@ -508,5 +508,11 @@ const submitOrder = async () => {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+@media (max-width: 768px) {
+  .aspect-w-1 {
+    padding-bottom: 75%;
+  }
 }
 </style> 

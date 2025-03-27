@@ -117,8 +117,8 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex flex-col md:flex-row gap-8">
                         <!-- Filtres -->
-                        <div class="w-full md:w-64 flex-shrink-0">
-                            <div class="bg-white rounded-xl shadow-md p-6 sticky top-24" v-motion
+                        <div class="w-full md:w-64 flex-shrink-0 relative">
+                            <div class="bg-white rounded-xl shadow-md p-6 hidden md:block sticky-filter" v-motion
                                 :initial="{ opacity: 0, x: -20 }" :enter="{ opacity: 1, x: 0 }">
                                 <h3 class="text-lg font-semibold text-[#111829] mb-4">Filtres</h3>
 
@@ -135,30 +135,98 @@
                                     </div>
                                 </div>
 
-                                <!-- Prix -->
+                                <!-- Disponibilité -->
                                 <div class="mb-6">
-                                    <h4 class="font-medium text-gray-700 mb-2">Gamme de prix</h4>
+                                    <h4 class="font-medium text-gray-700 mb-2">Disponibilité</h4>
                                     <div class="space-y-2">
                                         <label class="flex items-center space-x-2 text-sm text-gray-600">
-                                            <input type="checkbox" v-model="priceRanges" value="0-50000"
+                                            <input type="checkbox" v-model="showInStock"
                                                 class="rounded text-[#23c55e] focus:ring-[#23c55e]">
-                                            <span>0 - 50 000 FCFA</span>
+                                            <span>En stock uniquement</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Caractéristiques -->
+                                <div class="mb-6">
+                                    <h4 class="font-medium text-gray-700 mb-2">Caractéristiques</h4>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                                            <input type="checkbox" v-model="features" value="nouveau"
+                                                class="rounded text-[#23c55e] focus:ring-[#23c55e]">
+                                            <span>Nouveautés</span>
                                         </label>
                                         <label class="flex items-center space-x-2 text-sm text-gray-600">
-                                            <input type="checkbox" v-model="priceRanges" value="50000-100000"
+                                            <input type="checkbox" v-model="features" value="certification"
                                                 class="rounded text-[#23c55e] focus:ring-[#23c55e]">
-                                            <span>50 000 - 100 000 FCFA</span>
+                                            <span>Produits certifiés</span>
                                         </label>
                                         <label class="flex items-center space-x-2 text-sm text-gray-600">
-                                            <input type="checkbox" v-model="priceRanges" value="100000-200000"
+                                            <input type="checkbox" v-model="features" value="connecte"
                                                 class="rounded text-[#23c55e] focus:ring-[#23c55e]">
-                                            <span>100 000 - 200 000 FCFA</span>
+                                            <span>Produits connectés</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Type d'utilisation -->
+                                <div class="mb-6">
+                                    <h4 class="font-medium text-gray-700 mb-2">Utilisation</h4>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                                            <input type="checkbox" v-model="usageTypes" value="interieur"
+                                                class="rounded text-[#23c55e] focus:ring-[#23c55e]">
+                                            <span>Intérieur</span>
                                         </label>
                                         <label class="flex items-center space-x-2 text-sm text-gray-600">
-                                            <input type="checkbox" v-model="priceRanges" value="200000+"
+                                            <input type="checkbox" v-model="usageTypes" value="exterieur"
                                                 class="rounded text-[#23c55e] focus:ring-[#23c55e]">
-                                            <span>200 000+ FCFA</span>
+                                            <span>Extérieur</span>
                                         </label>
+                                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                                            <input type="checkbox" v-model="usageTypes" value="professionnel"
+                                                class="rounded text-[#23c55e] focus:ring-[#23c55e]">
+                                            <span>Usage professionnel</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Bouton pour réinitialiser les filtres -->
+                                <button @click="resetFilters"
+                                    class="w-full py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium">
+                                    Réinitialiser les filtres
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Filtres (Version mobile) -->
+                        <div class="md:hidden w-full bg-white rounded-xl shadow-md p-6 mb-6" v-motion
+                            :initial="{ opacity: 0, x: -20 }" :enter="{ opacity: 1, x: 0 }">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-[#111829]">Filtres</h3>
+                                <button @click="toggleMobileFilters" class="text-gray-500 hover:text-gray-700">
+                                    <template v-if="showMobileFilters">
+                                        <span class="sr-only">Fermer les filtres</span>
+                                        <ChevronUpIcon class="w-5 h-5" />
+                                    </template>
+                                    <template v-else>
+                                        <span class="sr-only">Ouvrir les filtres</span>
+                                        <ChevronDownIcon class="w-5 h-5" />
+                                    </template>
+                                </button>
+                            </div>
+
+                            <div v-if="showMobileFilters">
+                                <!-- Recherche -->
+                                <div class="mb-6">
+                                    <label for="search-mobile"
+                                        class="block text-sm font-medium text-gray-700 mb-2">Recherche</label>
+                                    <div class="relative">
+                                        <input type="text" id="search-mobile" v-model="searchQuery"
+                                            placeholder="Nom du produit..."
+                                            class="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-300 focus:ring-[#23c55e] focus:border-[#23c55e]" />
+                                        <MagnifyingGlassIcon
+                                            class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                                     </div>
                                 </div>
 
@@ -174,6 +242,50 @@
                                     </div>
                                 </div>
 
+                                <!-- Caractéristiques -->
+                                <div class="mb-6">
+                                    <h4 class="font-medium text-gray-700 mb-2">Caractéristiques</h4>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                                            <input type="checkbox" v-model="features" value="nouveau"
+                                                class="rounded text-[#23c55e] focus:ring-[#23c55e]">
+                                            <span>Nouveautés</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                                            <input type="checkbox" v-model="features" value="certification"
+                                                class="rounded text-[#23c55e] focus:ring-[#23c55e]">
+                                            <span>Produits certifiés</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                                            <input type="checkbox" v-model="features" value="connecte"
+                                                class="rounded text-[#23c55e] focus:ring-[#23c55e]">
+                                            <span>Produits connectés</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Type d'utilisation -->
+                                <div class="mb-6">
+                                    <h4 class="font-medium text-gray-700 mb-2">Utilisation</h4>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                                            <input type="checkbox" v-model="usageTypes" value="interieur"
+                                                class="rounded text-[#23c55e] focus:ring-[#23c55e]">
+                                            <span>Intérieur</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                                            <input type="checkbox" v-model="usageTypes" value="exterieur"
+                                                class="rounded text-[#23c55e] focus:ring-[#23c55e]">
+                                            <span>Extérieur</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                                            <input type="checkbox" v-model="usageTypes" value="professionnel"
+                                                class="rounded text-[#23c55e] focus:ring-[#23c55e]">
+                                            <span>Usage professionnel</span>
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <!-- Bouton pour réinitialiser les filtres -->
                                 <button @click="resetFilters"
                                     class="w-full py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium">
@@ -185,18 +297,16 @@
                         <!-- Liste des produits -->
                         <div class="flex-1">
                             <div v-motion :initial="{ opacity: 0, y: 20 }" :enter="{ opacity: 1, y: 0 }"
-                                class="mb-6 flex items-center justify-between">
+                                class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                                 <h2 class="text-2xl font-bold text-[#111829]">
                                     {{activeCategory === 'all' ? 'Tous les produits' : categories.find(c => c.id ===
-                                    activeCategory)?.name }}
+                                        activeCategory)?.name}}
                                 </h2>
-                                <div class="flex items-center space-x-2">
+                                <div class="flex items-center space-x-2 w-full sm:w-auto">
                                     <span class="text-sm text-gray-500">Trier par:</span>
                                     <select v-model="sortBy"
-                                        class="py-1 px-2 border border-gray-300 rounded-lg text-sm focus:ring-[#23c55e] focus:border-[#23c55e]">
+                                        class="py-1 px-2 border border-gray-300 rounded-lg text-sm focus:ring-[#23c55e] focus:border-[#23c55e] w-full sm:w-auto">
                                         <option value="featured">Recommandés</option>
-                                        <option value="price-asc">Prix croissant</option>
-                                        <option value="price-desc">Prix décroissant</option>
                                         <option value="name-asc">Nom (A-Z)</option>
                                         <option value="name-desc">Nom (Z-A)</option>
                                     </select>
@@ -204,7 +314,7 @@
                             </div>
 
                             <!-- Grille de produits -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                                 <div v-for="(product, index) in filteredProducts" :key="product.id" v-motion
                                     :initial="{ opacity: 0, scale: 0.95 }"
                                     :enter="{ opacity: 1, scale: 1, transition: { delay: index * 50 } }"
@@ -221,23 +331,23 @@
                                             Rupture de stock
                                         </div>
                                     </div>
-                                    <div class="p-5">
+                                    <div class="p-4 sm:p-5">
                                         <div class="flex justify-between items-start">
                                             <h3
-                                                class="text-lg font-semibold text-[#111829] mb-2 group-hover:text-[#23c55e] transition-colors">
+                                                class="text-base sm:text-lg font-semibold text-[#111829] mb-2 group-hover:text-[#23c55e] transition-colors">
                                                 {{ product.name }}</h3>
                                             <span
-                                                class="text-[#23c55e] text-sm font-medium px-2 py-1 bg-[#23c55e]/10 rounded">Sur
+                                                class="text-[#23c55e] text-xs sm:text-sm font-medium px-2 py-1 bg-[#23c55e]/10 rounded ml-2 flex-shrink-0">Sur
                                                 devis</span>
                                         </div>
                                         <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ product.description }}</p>
-                                        <div class="flex justify-between items-center">
+                                        <div class="flex flex-wrap sm:flex-nowrap justify-between items-center gap-2">
                                             <NuxtLink :to="`/boutique/${product.id}`"
                                                 class="text-[#23c55e] hover:text-[#1ea550] text-sm font-medium">
                                                 Détails
                                             </NuxtLink>
                                             <button @click="openOrderModal(product)"
-                                                class="bg-[#23c55e] hover:bg-[#1ea550] text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+                                                class="bg-[#23c55e] hover:bg-[#1ea550] text-white py-2 px-3 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition-colors w-full sm:w-auto mt-2 sm:mt-0"
                                                 :disabled="!product.inStock"
                                                 :class="{ 'opacity-50 cursor-not-allowed': !product.inStock }">
                                                 Demander un devis
@@ -266,9 +376,11 @@
         <transition name="fade">
             <div v-if="showOrderModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div class="absolute inset-0 bg-black opacity-50" @click="showOrderModal = false"></div>
-                <div class="relative bg-white rounded-xl shadow-2xl max-w-lg w-full mx-auto p-6 z-10">
+                <div
+                    class="relative bg-white rounded-xl shadow-2xl max-w-lg w-full mx-auto p-4 sm:p-6 z-10 max-h-[90vh] overflow-y-auto">
                     <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-[#111829]">Demande de devis : {{ selectedProduct?.name }}</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-[#111829]">Demande de devis : {{
+                            selectedProduct?.name }}</h3>
                         <button @click="showOrderModal = false" class="text-gray-400 hover:text-gray-500">
                             <XMarkIcon class="w-6 h-6" />
                         </button>
@@ -282,8 +394,8 @@
                     </div>
 
                     <form @submit.prevent="submitOrder" class="space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="col-span-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="col-span-1 sm:col-span-2">
                                 <label for="quantity"
                                     class="block text-sm font-medium text-gray-700 mb-2">Quantité</label>
                                 <input type="number" id="quantity" v-model="orderForm.quantity" min="1"
@@ -320,7 +432,7 @@
                                     class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-[#23c55e] focus:border-[#23c55e]" />
                             </div>
 
-                            <div class="col-span-2">
+                            <div class="col-span-1 sm:col-span-2">
                                 <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message
                                     (optionnel)</label>
                                 <textarea id="message" v-model="orderForm.message" rows="3"
@@ -365,11 +477,21 @@ import {
     XMarkIcon,
     ShieldCheckIcon,
     FireIcon,
-    CameraIcon
+    CameraIcon,
+    ChevronUpIcon,
+    ChevronDownIcon
 } from '@heroicons/vue/24/solid'
 import { useNuxtApp } from '#app'
 
 const { $analytics } = useNuxtApp()
+
+// État pour les filtres mobiles
+const showMobileFilters = ref(false);
+
+// Fonction pour afficher/masquer les filtres sur mobile
+const toggleMobileFilters = () => {
+    showMobileFilters.value = !showMobileFilters.value;
+};
 
 // Catégories
 const categories = [
@@ -382,8 +504,9 @@ const categories = [
 // État
 const activeCategory = ref('all')
 const searchQuery = ref('')
-const priceRanges = ref([])
 const showInStock = ref(false)
+const features = ref([])
+const usageTypes = ref([])
 const sortBy = ref('featured')
 const showOrderModal = ref(false)
 const selectedProduct = ref(null)
@@ -428,7 +551,7 @@ const products = ref([
     {
         id: 3,
         name
-        : "Extincteur CO2 5kg",
+            : "Extincteur CO2 5kg",
         description: "Extincteur à dioxyde de carbone pour feux de classe B et C, idéal pour les bureaux et les cuisines.",
         price: 45000,
         category: "incendie",
@@ -501,27 +624,45 @@ const filteredProducts = computed(() => {
         result = result.filter(product => product.inStock)
     }
 
-    // Filtrer par gamme de prix
-    if (priceRanges.value.length > 0) {
+    // Filtrer par caractéristiques
+    if (features.value.length > 0) {
         result = result.filter(product => {
-            return priceRanges.value.some(range => {
-                if (range === '0-50000') return product.price >= 0 && product.price < 50000
-                if (range === '50000-100000') return product.price >= 50000 && product.price < 100000
-                if (range === '100000-200000') return product.price >= 100000 && product.price < 200000
-                if (range === '200000+') return product.price >= 200000
-                return false
-            })
-        })
+            const hasNewFeature = features.value.includes('nouveau') ? product.isNew : true;
+            const hasCertification = features.value.includes('certification') ?
+                product.description.toLowerCase().includes('certifi') ||
+                product.description.toLowerCase().includes('norme') : true;
+            const isConnected = features.value.includes('connecte') ?
+                product.description.toLowerCase().includes('connect') ||
+                product.description.toLowerCase().includes('smartphone') ||
+                product.description.toLowerCase().includes('application') : true;
+
+            return hasNewFeature && hasCertification && isConnected;
+        });
+    }
+
+    // Filtrer par type d'utilisation
+    if (usageTypes.value.length > 0) {
+        result = result.filter(product => {
+            const isInterior = usageTypes.value.includes('interieur') ?
+                product.description.toLowerCase().includes('intérieur') ||
+                product.category === 'incendie' ||
+                product.category === 'electronique' : true;
+
+            const isExterior = usageTypes.value.includes('exterieur') ?
+                product.description.toLowerCase().includes('extérieur') ||
+                product.category === 'epi' : true;
+
+            const isProfessional = usageTypes.value.includes('professionnel') ?
+                product.description.toLowerCase().includes('professionnel') ||
+                product.description.toLowerCase().includes('travail') ||
+                product.category === 'epi' : true;
+
+            return isInterior && isExterior && isProfessional;
+        });
     }
 
     // Trier les produits
     switch (sortBy.value) {
-        case 'price-asc':
-            result.sort((a, b) => a.price - b.price)
-            break
-        case 'price-desc':
-            result.sort((a, b) => b.price - a.price)
-            break
         case 'name-asc':
             result.sort((a, b) => a.name.localeCompare(b.name))
             break
@@ -530,11 +671,11 @@ const filteredProducts = computed(() => {
             break
         case 'featured':
         default:
-            // Les produits nouveaux en premier, puis par ordre de prix décroissant
+            // Les produits nouveaux en premier, puis par ordre alphabétique
             result.sort((a, b) => {
                 if (a.isNew && !b.isNew) return -1
                 if (!a.isNew && b.isNew) return 1
-                return b.price - a.price
+                return a.name.localeCompare(b.name)
             })
     }
 
@@ -545,19 +686,10 @@ const filteredProducts = computed(() => {
 const resetFilters = () => {
     activeCategory.value = 'all'
     searchQuery.value = ''
-    priceRanges.value = []
     showInStock.value = false
+    features.value = []
+    usageTypes.value = []
     sortBy.value = 'featured'
-}
-
-// Formater le prix
-const formatPrice = (price) => {
-    return new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'XOF',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    }).format(price)
 }
 
 // Ouvrir le modal de commande
@@ -701,5 +833,16 @@ watch(activeCategory, (newCategory) => {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/* Styles spécifiques pour la sidebar fixe */
+@media (min-width: 768px) {
+    .sticky-filter {
+        position: sticky !important;
+        top: 100px !important;
+        max-height: calc(100vh - 120px) !important;
+        overflow-y: auto !important;
+        z-index: 10;
+    }
 }
 </style>

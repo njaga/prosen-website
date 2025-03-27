@@ -38,3 +38,7 @@ useSeoMeta({
   canonical: currentUrl
 })
 </script>
+
+<template>
+  <!-- Ce composant ne rend rien visuellement mais configure les métadonnées SEO -->
+</template>
