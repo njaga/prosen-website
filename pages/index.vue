@@ -442,82 +442,38 @@
           <p class="text-gray-600 max-w-2xl mx-auto text-lg">Découvrez notre sélection d'équipements de protection individuelle et de matériel de sécurité professionnel.</p>
         </div>
 
-        <!-- Produits en vedette -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <!-- Produit 1 -->
-          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+        <!-- Produits en vedette (chargés dynamiquement depuis Directus) -->
+        <div v-if="isLoading" class="flex justify-center items-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#23c55e]"></div>
+        </div>
+        
+        <div v-else-if="featuredProducts.length === 0" class="text-center py-8 bg-gray-50 rounded-xl mb-12">
+          <p class="text-gray-600">Aucun produit disponible pour le moment.</p>
+          <p class="text-gray-500 mt-2">Revenez bientôt pour découvrir notre sélection d'équipements.</p>
+        </div>
+        
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <!-- Produit dynamique -->
+          <div 
+            v-for="product in featuredProducts" 
+            :key="product.id"
+            class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+          >
             <div class="relative h-60">
-              <img src="/images/boutique/casque.avif" alt="Casque de sécurité premium" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
-              <div class="absolute top-2 right-2 bg-white text-[#23c55e] text-xs font-bold px-2 py-1 rounded shadow-sm">
+              <img :src="product.image" :alt="product.name" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+              <div v-if="product.isNew" class="absolute top-2 right-2 bg-white text-[#23c55e] text-xs font-bold px-2 py-1 rounded shadow-sm">
                 Nouveau
               </div>
-            </div>
-            <div class="p-5">
-              <h3 class="text-lg font-semibold text-[#111829] mb-1 group-hover:text-[#23c55e] transition-colors">Casque de sécurité premium</h3>
-              <p class="text-[#23c55e]/80 text-sm font-medium mb-3">Sur devis</p>
-              <div class="flex justify-end">
-                <NuxtLink 
-                  to="/boutique/1" 
-                  class="bg-[#23c55e] hover:bg-[#1ea550] text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
-                >
-                  Demander un devis
-                </NuxtLink>
-              </div>
-            </div>
-          </div>
-
-          <!-- Produit 2 -->
-          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
-            <div class="relative h-60">
-              <img src="/images/boutique/detecteur-fumee.webp" alt="Détecteur de fumée intelligent" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
-              <div class="absolute top-2 right-2 bg-white text-[#23c55e] text-xs font-bold px-2 py-1 rounded shadow-sm">
-                Nouveau
+              <div v-if="!product.inStock" class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow-sm">
+                Rupture de stock
               </div>
             </div>
             <div class="p-5">
-              <h3 class="text-lg font-semibold text-[#111829] mb-1 group-hover:text-[#23c55e] transition-colors">Détecteur de fumée intelligent</h3>
+              <h3 class="text-lg font-semibold text-[#111829] mb-1 group-hover:text-[#23c55e] transition-colors">{{ product.name }}</h3>
               <p class="text-[#23c55e]/80 text-sm font-medium mb-3">Sur devis</p>
               <div class="flex justify-end">
                 <NuxtLink 
-                  to="/boutique/3" 
-                  class="bg-[#23c55e] hover:bg-[#1ea550] text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
-                >
-                  Demander un devis
-                </NuxtLink>
-              </div>
-            </div>
-          </div>
-
-          <!-- Produit 3 -->
-          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
-            <div class="relative h-60">
-              <img src="/images/boutique/extincteurs.jpg" alt="Extincteur CO2 5kg" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
-            </div>
-            <div class="p-5">
-              <h3 class="text-lg font-semibold text-[#111829] mb-1 group-hover:text-[#23c55e] transition-colors">Extincteur CO2 5kg</h3>
-              <p class="text-[#23c55e]/80 text-sm font-medium mb-3">Sur devis</p>
-              <div class="flex justify-end">
-                <NuxtLink 
-                  to="/boutique/2" 
-                  class="bg-[#23c55e] hover:bg-[#1ea550] text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
-                >
-                  Demander un devis
-                </NuxtLink>
-              </div>
-            </div>
-          </div>
-
-          <!-- Produit 4 -->
-          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
-            <div class="relative h-60">
-              <img src="/images/boutique/camera.jpg" alt="Caméra de surveillance IP" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
-            </div>
-            <div class="p-5">
-              <h3 class="text-lg font-semibold text-[#111829] mb-1 group-hover:text-[#23c55e] transition-colors">Caméra de surveillance IP</h3>
-              <p class="text-[#23c55e]/80 text-sm font-medium mb-3">Sur devis</p>
-              <div class="flex justify-end">
-                <NuxtLink 
-                  to="/boutique/4" 
+                  :to="`/boutique/${product.id}`" 
                   class="bg-[#23c55e] hover:bg-[#1ea550] text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
                 >
                   Demander un devis
@@ -670,6 +626,7 @@ import {
   TruckIcon,
   ShoppingBagIcon
 } from '@heroicons/vue/24/solid'
+import { ref, onMounted } from 'vue'
 
 // Logos des clients (à utiliser lorsque la section sera décommentée)
 const clientLogos = [
@@ -682,6 +639,44 @@ const clientLogos = [
   { name: 'Client 7', src: '/images/clients/client7.png' },
   { name: 'Client 8', src: '/images/clients/client8.png' }
 ]
+
+// Produits en vedette (chargés depuis l'API)
+const featuredProducts = ref([])
+const isLoading = ref(true)
+const loadError = ref(null)
+
+// Charger les produits depuis l'API
+onMounted(async () => {
+  try {
+    isLoading.value = true
+    loadError.value = null
+    
+    // Appeler l'API pour récupérer tous les produits
+    const response = await $fetch('/api/boutique/products', {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    })
+    
+    if (response.success) {
+      console.log('Produits récupérés avec succès:', response.products.length)
+      // Prendre les 4 premiers produits disponibles
+      featuredProducts.value = response.products
+        .filter(p => p.inStock !== false) // Uniquement les produits en stock
+        .slice(0, 4) // Limiter à 4 produits
+    } else {
+      console.error('Erreur lors de la récupération des produits:', response)
+      loadError.value = 'Impossible de charger les produits'
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement des produits:', error)
+    loadError.value = 'Erreur de connexion au serveur'
+  } finally {
+    isLoading.value = false
+  }
+})
 </script>
 
 <style>

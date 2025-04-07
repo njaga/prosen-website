@@ -24,11 +24,15 @@
             <!-- Image du produit -->
             <div class="md:w-1/2">
               <div class="relative h-72 sm:h-80 md:h-full">
-                <img :src="product.image" :alt="product.name" class="w-full h-full object-cover object-center" />
-                <div v-if="!product.inStock" class="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                <ImageWithFallback 
+                  :src="product.image" 
+                  :alt="product.name" 
+                  class="w-full h-full object-cover object-center" 
+                />
+                <div v-if="product.inStock === false" class="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                   Rupture de stock
                 </div>
-                <div v-else-if="product.isNew" class="absolute top-4 left-4 bg-white text-[#23c55e] text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                <div v-else-if="product.isNew === true" class="absolute top-4 left-4 bg-white text-[#23c55e] text-xs font-bold px-3 py-1 rounded-full shadow-sm">
                   Nouveau
                 </div>
               </div>
@@ -40,11 +44,11 @@
               <div class="inline-block bg-[#23c55e]/10 text-[#23c55e] px-3 py-1.5 rounded-full text-sm font-semibold mb-4 md:mb-6">Prix sur devis</div>
 
               <div class="border-t border-gray-200 pt-4 md:pt-6 mb-4 md:mb-6">
-                <p class="text-gray-700 mb-4 md:mb-6 text-sm sm:text-base">{{ product.description }}</p>
+                <div class="text-gray-700 mb-4 md:mb-6 text-sm sm:text-base description-content" v-html="product.description"></div>
 
                 <div class="flex items-center mb-3 md:mb-6">
                   <span class="mr-2 font-medium text-gray-700 text-sm sm:text-base">Disponibilité:</span>
-                  <span v-if="product.inStock" class="text-green-600 flex items-center text-sm sm:text-base">
+                  <span v-if="product.inStock !== false" class="text-green-600 flex items-center text-sm sm:text-base">
                     <CheckCircleIcon class="w-4 h-4 sm:w-5 sm:h-5 mr-1" /> En stock
                   </span>
                   <span v-else class="text-red-600 flex items-center text-sm sm:text-base">
@@ -56,13 +60,24 @@
                   <span class="font-medium text-gray-700 text-sm sm:text-base">Catégorie:</span>
                   <span class="ml-2 text-gray-600 text-sm sm:text-base">{{ getCategoryName(product.category) }}</span>
                 </div>
+                
+                <!-- Caractéristiques du produit -->
+                <div v-if="product.features && product.features.length > 0" class="mb-4 md:mb-6">
+                  <span class="font-medium text-gray-700 block mb-2 text-sm sm:text-base">Caractéristiques:</span>
+                  <ul class="list-disc list-inside space-y-1 text-gray-600 text-sm sm:text-base pl-2">
+                    <li v-for="(feature, index) in product.features" :key="index" class="flex items-start">
+                      <span class="inline-block w-2 h-2 rounded-full bg-[#23c55e] mt-1.5 mr-2 flex-shrink-0"></span>
+                      <span>{{ getFeatureText(feature) }}</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
               <button 
                 @click="openOrderModal(product)"
                 class="w-full bg-[#23c55e] hover:bg-[#1ea550] text-white py-3 px-6 rounded-xl font-medium transition-colors"
-                :disabled="!product.inStock"
-                :class="{'opacity-50 cursor-not-allowed': !product.inStock}"
+                :disabled="product.inStock === false"
+                :class="{'opacity-50 cursor-not-allowed': product.inStock === false}"
               >
                 <ShoppingCartIcon class="w-5 h-5 inline-block mr-2" />
                 Demander un devis
@@ -76,7 +91,7 @@
         </div>
 
         <!-- Produits similaires -->
-        <div class="mt-12 md:mt-16">
+        <div v-if="relatedProducts.length > 0" class="mt-12 md:mt-16">
           <h2 class="text-xl sm:text-2xl font-bold text-[#111829] mb-6 md:mb-8">Produits similaires</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             <div 
@@ -85,7 +100,11 @@
               class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group"
             >
               <div class="aspect-w-1 aspect-h-1 relative">
-                <img :src="relatedProduct.image" :alt="relatedProduct.name" class="w-full h-48 object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+                <ImageWithFallback 
+                  :src="relatedProduct.image" 
+                  :alt="relatedProduct.name"
+                  class="w-full h-48 object-cover object-center group-hover:scale-105 transition-transform duration-500" 
+                />
               </div>
               <div class="p-4 sm:p-5">
                 <div class="flex justify-between items-start">
@@ -102,14 +121,25 @@
                   <button 
                     @click="openOrderModal(relatedProduct)"
                     class="bg-[#23c55e] hover:bg-[#1ea550] text-white py-2 px-3 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition-colors w-full sm:w-auto mt-2 sm:mt-0"
-                    :disabled="!relatedProduct.inStock"
-                    :class="{'opacity-50 cursor-not-allowed': !relatedProduct.inStock}"
+                    :disabled="relatedProduct.inStock === false"
+                    :class="{'opacity-50 cursor-not-allowed': relatedProduct.inStock === false}"
                   >
                     Demander un devis
                   </button>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Message quand aucun produit similaire n'est disponible -->
+        <div v-else-if="product && allProducts.length > 0" class="mt-12 md:mt-16">
+          <h2 class="text-xl sm:text-2xl font-bold text-[#111829] mb-4">Produits similaires</h2>
+          <div class="bg-gray-50 rounded-xl p-6 text-center">
+            <p class="text-gray-600">Aucun produit similaire n'est disponible pour le moment.</p>
+            <NuxtLink to="/boutique" class="inline-block mt-4 text-[#23c55e] hover:text-[#1ea550] font-medium">
+              Retourner à la boutique
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -231,7 +261,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { 
   ShoppingCartIcon,
@@ -240,6 +270,7 @@ import {
   XCircleIcon
 } from '@heroicons/vue/24/solid'
 import { useNuxtApp } from '#app'
+import ImageWithFallback from '~/components/ImageWithFallback.vue'
 
 const { $analytics } = useNuxtApp()
 const route = useRoute()
@@ -264,119 +295,249 @@ const orderForm = ref({
   message: ''
 })
 
-// Produits fictifs (identiques à ceux de index.vue)
-const allProducts = ref([
-  {
-    id: 1,
-    name: "Casque de sécurité premium",
-    description: "Casque de protection robuste avec aération, idéal pour les chantiers de construction. Conçu selon les normes de sécurité les plus strictes, ce casque offre une protection supérieure contre les chutes d'objets et les impacts. Sa coque en ABS de haute qualité assure durabilité et résistance, tandis que son système d'aération innovant garde la tête au frais même lors des journées chaudes.",
-    price: 12500,
-    category: "epi",
-    image: "/images/boutique/casque.avif",
-    inStock: true,
-    isNew: true
-  },
-  {
-    id: 2,
-    name: "Gilet haute visibilité",
-    description: "Gilet réfléchissant conforme aux normes de sécurité pour une visibilité optimale. Équipé de bandes réfléchissantes 3M, ce gilet assure une visibilité maximale dans toutes les conditions de luminosité. Fabriqué en tissu respirant et léger, il offre un confort optimal même lors d'une utilisation prolongée. Idéal pour les travailleurs de chantier, les agents de circulation et toute personne travaillant en extérieur.",
-    price: 8500,
-    category: "epi",
-    image: "/images/boutique/gilet.avif",
-    inStock: true,
-    isNew: false
-  },
-  {
-    id: 3,
-    name: "Détecteur de fumée intelligent",
-    description: "Détecteur connecté avec alarme puissante et notification sur smartphone. Ce détecteur de dernière génération utilise une technologie avancée pour détecter rapidement la présence de fumée. En cas d'alerte, il déclenche une alarme de 85 dB et envoie immédiatement une notification sur votre smartphone, même lorsque vous êtes absent. Installation facile et batterie longue durée pour une tranquillité d'esprit maximale.",
-    price: 25000,
-    category: "incendie",
-    image: "/images/boutique/detecteur.jpg",
-    inStock: true,
-    isNew: true
-  },
-  {
-    id: 4,
-    name: "Caméra de surveillance HD",
-    description: "Caméra 1080p avec vision nocturne et détection de mouvement avancée. Cette caméra de surveillance haute définition capture des images d'une clarté exceptionnelle de jour comme de nuit grâce à sa technologie infrarouge. Dotée d'un système intelligent de détection de mouvement, elle vous alerte immédiatement en cas d'activité suspecte. Compatible avec les principaux systèmes domotiques, son installation est simple et rapide.",
-    price: 85000,
-    category: "electronique",
-    image: "/images/boutique/camera.jpg",
-    inStock: true,
-    isNew: false
-  },
-  {
-    id: 5,
-    name: "Extincteur à poudre 6kg",
-    description: "Extincteur polyvalent pour feux de classe A, B et C avec support mural inclus. Cet extincteur à poudre ABC est efficace contre les feux de solides, de liquides et de gaz. Son fonctionnement simple et intuitif permet une utilisation rapide en cas d'urgence. Livré avec un support mural robuste et un manomètre pour vérifier facilement la pression. Conforme aux normes de sécurité en vigueur.",
-    price: 45000,
-    category: "incendie",
-    image: "/images/boutique/extincteur.avif",
-    inStock: true,
-    isNew: false
-  },
-  {
-    id: 6,
-    name: "Gants de protection anti-coupure",
-    description: "Gants résistants aux coupures et aux perforations, adaptés aux travaux de précision. Fabriqués avec des fibres haute performance et un revêtement en polyuréthane, ces gants offrent une protection optimale contre les coupures tout en préservant la dextérité. Leur design ergonomique assure un confort optimal même lors d'une utilisation prolongée. Idéaux pour les travaux nécessitant une manipulation d'objets tranchants.",
-    price: 7500,
-    category: "epi",
-    image: "/images/boutique/gants.avif",
-    inStock: true,
-    isNew: false
-  },
-  {
-    id: 7,
-    name: "Système d'alarme sans fil",
-    description: "Kit complet avec centrale, détecteurs de mouvement et sirènes pour protection résidentielle. Ce système d'alarme sans fil de dernière génération offre une protection complète pour votre domicile ou votre entreprise. Le kit comprend une centrale, des détecteurs de mouvement, des contacts de porte/fenêtre et une sirène puissante. Contrôlable via smartphone, il vous permet de surveiller votre propriété à distance en toute simplicité.",
-    price: 195000,
-    category: "electronique",
-    image: "/images/boutique/detecteur-fumee.webp",
-    inStock: false,
-    isNew: false
-  },
-  {
-    id: 8,
-    name: "Chaussures de sécurité S3",
-    description: "Chaussures avec embout acier, semelle anti-perforation et absorption d'énergie au talon. Ces chaussures de sécurité haut de gamme répondent aux normes S3, offrant une protection complète pour les environnements de travail exigeants. Leur embout en acier protège contre les chutes d'objets, tandis que la semelle anti-perforation prévient les blessures causées par les objets pointus. Le design ergonomique et les matériaux respirants assurent un confort optimal toute la journée.",
-    price: 32000,
-    category: "epi",
-    image: "/images/boutique/chaussures.avif",
-    inStock: true,
-    isNew: true
-  },
-  {
-    id: 9,
-    name: "Kit de premiers secours",
-    description: "Mallette complète avec équipements essentiels pour situations d'urgence. Ce kit de premiers secours contient tous les éléments nécessaires pour répondre efficacement aux situations d'urgence: bandages, compresses, ciseaux, gants, couverture de survie, etc. La mallette robuste et étanche protège son contenu et permet un transport facile. Indispensable pour les entreprises, les véhicules et les domiciles.",
-    price: 18500,
-    category: "incendie",
-    image: "/images/boutique/kit-secours.jpg",
-    inStock: true,
-    isNew: false
+// Remplacer le code existant des produits statiques par la récupération depuis l'API
+const allProducts = ref([])
+
+// Fonction pour récupérer un produit par son ID
+const fetchProduct = async (id) => {
+  try {
+    console.log(`Tentative de récupération du produit ${id}`);
+    
+    // Utiliser $fetch au lieu de useFetch pour un meilleur contrôle
+    const response = await $fetch(`/api/boutique/product/${id}`, {
+      method: 'GET',
+      // Éviter le cache
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
+    
+    if (response && response.success) {
+      console.log('Produit récupéré avec succès:', response.product);
+      
+      // Déboguer l'objet produit reçu
+      const debugProduct = (prod) => {
+        console.log('=== DÉBOGAGE PRODUIT ===');
+        console.log('ID:', prod.id);
+        console.log('Nom:', prod.name);
+        console.log('Description:', prod.description?.substring(0, 30) + '...');
+        console.log('Catégorie:', prod.category);
+        console.log('Image:', prod.image);
+        console.log('inStock:', prod.inStock, typeof prod.inStock);
+        console.log('isNew:', prod.isNew, typeof prod.isNew);
+        console.log('Features:', prod.features);
+        console.log('=== FIN DÉBOGAGE ===');
+      };
+      
+      // Assurez-vous que toutes les propriétés requises existent
+      const productData = {
+        id: response.product.id,
+        name: response.product.name || 'Produit sans nom',
+        description: response.product.description || 'Aucune description disponible',
+        short_description: response.product.short_description || '',
+        price: response.product.price || 0,
+        category: response.product.category || 'epi',
+        inStock: response.product.inStock === false ? false : true, // Par défaut en stock si non spécifié
+        isNew: response.product.isNew === true ? true : false, // Par défaut pas nouveau si non spécifié
+        features: processFeatures(response.product.features),
+        image: response.product.image || '/images/placeholder-product.png'
+      };
+      
+      // Fonction pour traiter les caractéristiques du produit
+      function processFeatures(features) {
+        console.log('Traitement des caractéristiques:', features);
+        
+        // Si pas de caractéristiques, retourner un tableau vide
+        if (!features) return [];
+        
+        // Si c'est déjà un tableau, le retourner tel quel
+        if (Array.isArray(features)) return features;
+        
+        // Si c'est une chaîne JSON, tenter de la parser
+        if (typeof features === 'string') {
+          try {
+            const parsedFeatures = JSON.parse(features);
+            console.log('Caractéristiques parsées:', parsedFeatures);
+            
+            // Si c'est un objet au format {"Caracteristique":"Valeur"}
+            if (typeof parsedFeatures === 'object' && !Array.isArray(parsedFeatures)) {
+              return Object.entries(parsedFeatures).map(([key, value]) => {
+                // Si la clé est "text", "name" ou "value", utiliser directement l'objet
+                if (key === 'text' || key === 'name' || key === 'value') {
+                  return { text: value };
+                }
+                // Si la clé est "Caracteristique", n'utiliser que la valeur
+                if (key === 'Caracteristique' || key.toLowerCase() === 'caracteristique') {
+                  return { text: value };
+                }
+                // Sinon créer un objet avec le texte formaté "Clé: Valeur"
+                return { text: `${key}: ${value}` };
+              });
+            }
+            
+            return Array.isArray(parsedFeatures) ? parsedFeatures : [parsedFeatures];
+          } catch (e) {
+            console.warn('Erreur de parsing des caractéristiques:', e);
+            return [{ text: features }];
+          }
+        }
+        
+        // Si c'est un objet au format {"Caracteristique":"Valeur"}
+        if (typeof features === 'object' && !Array.isArray(features)) {
+          return Object.entries(features).map(([key, value]) => {
+            // Si la clé est "text", "name" ou "value", utiliser directement l'objet
+            if (key === 'text' || key === 'name' || key === 'value') {
+              return { text: value };
+            }
+            // Si la clé est "Caracteristique", n'utiliser que la valeur
+            if (key === 'Caracteristique' || key.toLowerCase() === 'caracteristique') {
+              return { text: value };
+            }
+            // Sinon créer un objet avec le texte formaté "Clé: Valeur"
+            return { text: `${key}: ${value}` };
+          });
+        }
+        
+        // Par défaut, retourner un tableau vide
+        return [];
+      }
+      
+      // Déboguer avant et après le traitement de l'image
+      debugProduct(response.product);
+      
+      // Traitement de l'image pour être compatible avec Directus
+      if (productData.image) {
+        // Vérifier le format d'image
+        console.log("Type d'image reçu:", typeof productData.image, productData.image);
+        
+        // Si l'image est une chaîne simple sans http ou /
+        if (typeof productData.image === 'string' && 
+            !productData.image.startsWith('http') && 
+            !productData.image.startsWith('/')) {
+          // C'est probablement un ID d'image Directus
+          const directusUrl = import.meta.env.VITE_DIRECTUS_URL || 'http://localhost:8055';
+          productData.image = `${directusUrl}/assets/${productData.image}`;
+          console.log('Image Directus formatée:', productData.image);
+        }
+        // Si l'image est un objet avec une propriété id
+        else if (typeof productData.image === 'object' && productData.image.id) {
+          const directusUrl = import.meta.env.VITE_DIRECTUS_URL || 'http://localhost:8055';
+          productData.image = `${directusUrl}/assets/${productData.image.id}`;
+          console.log('Image Directus formatée à partir de l\'objet:', productData.image);
+        }
+      }
+      
+      product.value = productData;
+      debugProduct(productData);
+    } else {
+      console.warn('Produit non trouvé ou erreur:', response);
+      navigateTo('/boutique');
+    }
+  } catch (error) {
+    console.error(`Erreur lors de la récupération du produit ${id}:`, error);
+    navigateTo('/boutique');
   }
-])
+};
+
+// Fonction pour récupérer tous les produits (pour les produits similaires)
+const fetchAllProducts = async () => {
+  try {
+    console.log('Tentative de récupération de tous les produits');
+    
+    // Utiliser $fetch au lieu de useFetch pour un meilleur contrôle
+    const response = await $fetch('/api/boutique/products', {
+      method: 'GET',
+      // Éviter le cache
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
+    
+    if (response && response.success) {
+      console.log(`${response.products.length} produits récupérés avec succès`);
+      allProducts.value = response.products;
+    } else {
+      console.warn('Erreur lors de la récupération des produits:', response);
+      allProducts.value = [];
+    }
+  } catch (error) {
+    console.error('Erreur lors de la récupération des produits:', error);
+    allProducts.value = [];
+  }
+};
 
 // Récupérer le produit en fonction de l'ID
-onMounted(() => {
-  const productId = parseInt(route.params.id)
-  product.value = allProducts.value.find(p => p.id === productId)
-  
-  // Si le produit n'existe pas, rediriger vers la boutique
+onMounted(async () => {
+  try {
+    const productId = route.params.id;
+    
+    if (!productId) {
+      console.error('Aucun ID de produit trouvé dans les paramètres de route');
+      return navigateTo('/boutique');
+    }
+    
+    // Récupérer le produit et les produits similaires
+    await Promise.all([
+      fetchProduct(productId),
+      fetchAllProducts()
+    ]);
+    
+    // Lancer un avertissement si le produit n'a pas été chargé
+    await nextTick();
   if (!product.value) {
-    navigateTo('/boutique')
+      console.warn('Le produit n\'a pas pu être chargé même après fetchProduct');
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement initial du produit:', error);
+    navigateTo('/boutique');
   }
-})
+});
+
+// Surveiller les changements d'ID dans la route pour recharger le produit si nécessaire
+watch(() => route.params.id, async (newId, oldId) => {
+  if (newId && newId !== oldId) {
+    console.log(`L'ID du produit a changé: ${oldId} -> ${newId}`);
+    await fetchProduct(newId);
+  }
+});
 
 // Obtenir les produits similaires
 const relatedProducts = computed(() => {
-  if (!product.value) return []
+  if (!product.value) return [];
   
-  return allProducts.value
-    .filter(p => p.category === product.value.category && p.id !== product.value.id)
-    .slice(0, 4)
-})
+  // Si aucun produit n'est disponible, retourner un tableau vide
+  if (allProducts.value.length === 0) return [];
+  
+  // Filtrer d'abord par catégorie si disponible
+  let similar = [];
+  
+  // 1. Essayer d'abord de trouver des produits de la même catégorie
+  if (product.value.category) {
+    similar = allProducts.value.filter(p => 
+      p.category && 
+      p.category === product.value.category && 
+      p.id !== product.value.id
+    );
+  }
+  
+  // 2. Si nous n'avons pas assez de produits similaires, ajouter d'autres produits
+  if (similar.length < 4) {
+    const otherProducts = allProducts.value.filter(p => 
+      p.id !== product.value.id && 
+      !similar.some(s => s.id === p.id)
+    );
+    
+    // Ajouter ces produits jusqu'à ce que nous ayons 4 produits au total
+    similar = [...similar, ...otherProducts].slice(0, 4);
+  } else {
+    // Limiter à 4 produits
+    similar = similar.slice(0, 4);
+  }
+  
+  return similar;
+});
 
 // Obtenir le nom de la catégorie
 const getCategoryName = (categoryId) => {
@@ -482,6 +643,41 @@ const submitOrder = async () => {
     isSubmitting.value = false
   }
 }
+
+// Récupérer le texte d'une caractéristique
+const getFeatureText = (feature) => {
+  if (!feature) return '';
+  
+  if (typeof feature === 'string') return feature;
+  
+  if (typeof feature === 'object') {
+    if (feature.text) return feature.text;
+    if (feature.name) return feature.name;
+    if (feature.value) return feature.value;
+    
+    // Vérifier s'il s'agit d'une paire clé-valeur
+    const entries = Object.entries(feature);
+    if (entries.length === 1) {
+      const [key, value] = entries[0];
+      // Si la clé est "Caracteristique", n'utiliser que la valeur
+      if (key === 'Caracteristique' || key.toLowerCase() === 'caracteristique') {
+        return value;
+      }
+      if (key !== 'text' && key !== 'name' && key !== 'value') {
+        return `${key}: ${value}`;
+      }
+    }
+    
+    // Si aucune propriété connue n'est trouvée, tenter une conversion JSON
+    try {
+      return JSON.stringify(feature);
+    } catch (e) {
+      return 'Caractéristique';
+    }
+  }
+  
+  return String(feature);
+}
 </script>
 
 <style scoped>
@@ -513,6 +709,47 @@ const submitOrder = async () => {
 @media (max-width: 768px) {
   .aspect-w-1 {
     padding-bottom: 75%;
+  }
+}
+
+/* Styles pour le contenu de la description */
+:deep(.description-content) {
+  /* Styles pour les listes */
+  ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  ol {
+    list-style-type: decimal;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  li {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Styles pour les paragraphes */
+  p {
+    margin-bottom: 1rem;
+  }
+  
+  /* Styles pour les titres */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Mise en évidence */
+  strong, b {
+    font-weight: 600;
+  }
+  
+  em, i {
+    font-style: italic;
   }
 }
 </style> 

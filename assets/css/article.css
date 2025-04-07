@@ -1,0 +1,74 @@
+/* Styles spécifiques pour le contenu des articles */
+
+/* Force les styles de liste à s'appliquer même avec d'autres frameworks CSS */
+.article ul,
+.article ol,
+.prose.article ul,
+.prose.article ol {
+  margin-left: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+  padding-left: 0.5rem !important;
+}
+
+.article ul,
+.prose.article ul {
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+}
+
+.article ol,
+.prose.article ol {
+  list-style-type: decimal !important;
+  list-style-position: outside !important;
+}
+
+.article li,
+.prose.article li {
+  margin-bottom: 0.5rem !important;
+  display: list-item !important;
+  margin-left: 1rem !important;
+}
+
+/* Styles spécifiques pour les listes personnalisées */
+.article ul li.checklist,
+.article ul li.infolist,
+.prose.article ul li.checklist,
+.prose.article ul li.infolist {
+  list-style-type: none !important;
+  position: relative !important;
+  padding-left: 1.75rem !important;
+  margin-left: 0 !important;
+}
+
+.article ul li.checklist::before,
+.prose.article ul li.checklist::before {
+  content: '✓' !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: #23c55e !important;
+  font-weight: bold !important;
+}
+
+.article ul li.infolist::before,
+.prose.article ul li.infolist::before {
+  content: 'ℹ' !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: #3b82f6 !important;
+  font-weight: bold !important;
+}
+
+/* Adaptation pour le mode mobile */
+@media (max-width: 640px) {
+  .article ul,
+  .article ol,
+  .prose.article ul,
+  .prose.article ol {
+    margin-left: 1rem !important;
+  }
+  
+  .article li,
+  .prose.article li {
+    margin-left: 0.5rem !important;
+  }
+} 

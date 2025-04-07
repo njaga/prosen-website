@@ -1,0 +1,372 @@
+{
+  "collections": {
+    "products": {
+      "fields": {
+        "id": {
+          "type": "integer",
+          "interface": "input",
+          "options": {
+            "primaryKey": true,
+            "autoIncrement": true
+          },
+          "required": true,
+          "readonly": true,
+          "hidden": true,
+          "meta": {
+            "special": ["uuid"]
+          }
+        },
+        "name": {
+          "type": "string",
+          "interface": "input",
+          "options": {
+            "placeholder": "Nom du produit"
+          },
+          "required": true,
+          "meta": {
+            "width": "full"
+          }
+        },
+        "description": {
+          "type": "text",
+          "interface": "input-rich-text-html",
+          "options": {
+            "placeholder": "Description détaillée du produit"
+          },
+          "required": true,
+          "meta": {
+            "width": "full"
+          }
+        },
+        "short_description": {
+          "type": "string",
+          "interface": "input",
+          "options": {
+            "placeholder": "Brève description du produit"
+          },
+          "required": true,
+          "meta": {
+            "width": "full"
+          }
+        },
+        "price": {
+          "type": "integer",
+          "interface": "input",
+          "options": {
+            "placeholder": "Prix du produit en centimes (100 = 1.00)"
+          },
+          "required": true,
+          "meta": {
+            "width": "half",
+            "display": "price"
+          }
+        },
+        "category": {
+          "type": "string",
+          "interface": "select-dropdown",
+          "options": {
+            "choices": [
+              { "text": "Équipements de Protection", "value": "protection" },
+              { "text": "Sécurité Incendie", "value": "incendie" },
+              { "text": "Sécurité Électronique", "value": "electronique" },
+              { "text": "Autres", "value": "autres" }
+            ]
+          },
+          "required": true,
+          "meta": {
+            "width": "half"
+          }
+        },
+        "image": {
+          "type": "file",
+          "interface": "file-image",
+          "options": {
+            "folder": "products"
+          },
+          "required": true,
+          "meta": {
+            "width": "full"
+          }
+        },
+        "inStock": {
+          "type": "boolean",
+          "interface": "boolean",
+          "options": {
+            "label": "En stock"
+          },
+          "required": true,
+          "meta": {
+            "width": "half"
+          }
+        },
+        "isNew": {
+          "type": "boolean",
+          "interface": "boolean",
+          "options": {
+            "label": "Nouveau produit"
+          },
+          "meta": {
+            "width": "half"
+          }
+        },
+        "features": {
+          "type": "json",
+          "interface": "input-code",
+          "options": {
+            "template": "[\"Caractéristique 1\", \"Caractéristique 2\", \"Caractéristique 3\"]",
+            "language": "json"
+          },
+          "meta": {
+            "width": "full",
+            "note": "Liste des caractéristiques du produit au format JSON"
+          }
+        },
+        "date_created": {
+          "type": "timestamp",
+          "interface": "datetime",
+          "readonly": true,
+          "hidden": false,
+          "meta": {
+            "special": ["date-created"],
+            "width": "half"
+          }
+        },
+        "date_updated": {
+          "type": "timestamp",
+          "interface": "datetime",
+          "readonly": true,
+          "hidden": false,
+          "meta": {
+            "special": ["date-updated"],
+            "width": "half"
+          }
+        }
+      }
+    },
+    "emplois": {
+      "fields": {
+        "id": {
+          "type": "integer",
+          "interface": "input",
+          "options": {
+            "primaryKey": true,
+            "autoIncrement": true
+          },
+          "required": true,
+          "readonly": true,
+          "hidden": true,
+          "meta": {
+            "special": ["uuid"]
+          }
+        },
+        "titre": {
+          "type": "string",
+          "interface": "input",
+          "options": {
+            "placeholder": "Titre du poste"
+          },
+          "required": true,
+          "meta": {
+            "width": "full"
+          }
+        },
+        "slug": {
+          "type": "string",
+          "interface": "input",
+          "options": {
+            "placeholder": "Identifiant unique pour l'URL (ex: agent-securite-dakar)"
+          },
+          "required": true,
+          "meta": {
+            "width": "full",
+            "note": "Utilisé dans l'URL, ne doit contenir que des lettres minuscules, chiffres et tirets"
+          }
+        },
+        "description": {
+          "type": "text",
+          "interface": "input-rich-text-html",
+          "options": {
+            "placeholder": "Description détaillée du poste"
+          },
+          "required": true,
+          "meta": {
+            "width": "full"
+          }
+        },
+        "resume": {
+          "type": "string",
+          "interface": "input",
+          "options": {
+            "placeholder": "Courte description du poste (max 200 caractères)"
+          },
+          "required": true,
+          "meta": {
+            "width": "full"
+          }
+        },
+        "type_contrat": {
+          "type": "string",
+          "interface": "select-dropdown",
+          "options": {
+            "choices": [
+              { "text": "CDI", "value": "cdi" },
+              { "text": "CDD", "value": "cdd" },
+              { "text": "Stage", "value": "stage" },
+              { "text": "Alternance", "value": "alternance" },
+              { "text": "Freelance", "value": "freelance" }
+            ]
+          },
+          "required": true,
+          "meta": {
+            "width": "half"
+          }
+        },
+        "categorie": {
+          "type": "string",
+          "interface": "select-dropdown",
+          "options": {
+            "choices": [
+              { "text": "Agent de sécurité", "value": "agent" },
+              { "text": "Technicien de surface", "value": "technicien" },
+              { "text": "Superviseur", "value": "superviseur" },
+              { "text": "Administratif", "value": "administratif" },
+              { "text": "Technique", "value": "technique" },
+              { "text": "Autre", "value": "autre" }
+            ]
+          },
+          "required": true,
+          "meta": {
+            "width": "half"
+          }
+        },
+        "lieu": {
+          "type": "string",
+          "interface": "input",
+          "options": {
+            "placeholder": "Localisation du poste (ex: Dakar, Sénégal)"
+          },
+          "required": true,
+          "meta": {
+            "width": "half"
+          }
+        },
+        "experience": {
+          "type": "string",
+          "interface": "select-dropdown",
+          "options": {
+            "choices": [
+              { "text": "Débutant accepté", "value": "debutant" },
+              { "text": "1-2 ans", "value": "1-2" },
+              { "text": "3-5 ans", "value": "3-5" },
+              { "text": "Plus de 5 ans", "value": "5+" }
+            ]
+          },
+          "required": true,
+          "meta": {
+            "width": "half"
+          }
+        },
+        "salaire": {
+          "type": "string",
+          "interface": "input",
+          "options": {
+            "placeholder": "Rémunération (ex: Selon profil, 400 000 FCFA, etc.)"
+          },
+          "meta": {
+            "width": "half"
+          }
+        },
+        "avantages": {
+          "type": "json",
+          "interface": "list",
+          "options": {
+            "template": "{{text}}",
+            "fields": [
+              {
+                "field": "text",
+                "type": "string",
+                "name": "Avantage"
+              }
+            ]
+          },
+          "meta": {
+            "width": "full",
+            "note": "Liste des avantages du poste (primes, formations, etc.)"
+          }
+        },
+        "competences": {
+          "type": "json",
+          "interface": "list",
+          "options": {
+            "template": "{{text}}",
+            "fields": [
+              {
+                "field": "text",
+                "type": "string",
+                "name": "Compétence"
+              }
+            ]
+          },
+          "meta": {
+            "width": "full",
+            "note": "Liste des compétences requises"
+          }
+        },
+        "date_limite": {
+          "type": "date",
+          "interface": "datetime",
+          "options": {
+            "includeSeconds": false
+          },
+          "meta": {
+            "width": "half",
+            "note": "Date limite de candidature (laisser vide si pas de limite)"
+          }
+        },
+        "date_publication": {
+          "type": "date",
+          "interface": "datetime",
+          "options": {
+            "includeSeconds": false 
+          },
+          "required": true,
+          "meta": {
+            "width": "half"
+          }
+        },
+        "publie": {
+          "type": "boolean",
+          "interface": "boolean",
+          "options": {
+            "label": "Offre publiée"
+          },
+          "required": true,
+          "meta": {
+            "width": "half",
+            "note": "Activer pour publier l'offre sur le site"
+          }
+        },
+        "date_created": {
+          "type": "timestamp",
+          "interface": "datetime",
+          "readonly": true,
+          "hidden": false,
+          "meta": {
+            "special": ["date-created"],
+            "width": "half"
+          }
+        },
+        "date_updated": {
+          "type": "timestamp",
+          "interface": "datetime",
+          "readonly": true,
+          "hidden": false,
+          "meta": {
+            "special": ["date-updated"],
+            "width": "half"
+          }
+        }
+      }
+    }
+  }
+} 

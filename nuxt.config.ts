@@ -16,6 +16,13 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt'
   ],
 
+  // Configuration Directus
+  runtimeConfig: {
+    public: {
+      directusUrl: process.env.DIRECTUS_URL || 'http://localhost:8055',
+    }
+  },
+
   app: {
     head: {
       title: 'PROSEN - Sécurité Professionnelle',
@@ -93,7 +100,7 @@ export default defineNuxtConfig({
     '/careers': { redirect: '/carrieres' }
   },
 
-  compatibilityDate: '2025-03-13',
+  compatibilityDate: '2025-04-06',
 
   // Ajoutez ces paramètres pour améliorer l'hydratation
   nitro: {
@@ -115,5 +122,20 @@ export default defineNuxtConfig({
       dir: '.output',
       publicDir: '.output/public'
     }
-  }
+  },
+
+  // Importer les styles globaux
+  css: [
+    // Autres fichiers CSS existants
+    '@/assets/css/global.css',
+    '@/assets/css/article.css'
+  ],
+  
+  // Configuration de Tailwind
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
 })

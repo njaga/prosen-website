@@ -320,8 +320,11 @@
                                     :enter="{ opacity: 1, scale: 1, transition: { delay: index * 50 } }"
                                     class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group">
                                     <div class="relative h-48">
-                                        <img :src="product.image" :alt="product.name"
-                                            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+                                        <ImageWithFallback 
+                                            :src="product.image" 
+                                            :alt="product.name"
+                                            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" 
+                                        />
                                         <div v-if="product.isNew"
                                             class="absolute top-2 right-2 bg-white text-[#23c55e] text-xs font-bold px-2 py-1 rounded shadow-sm">
                                             Nouveau
@@ -340,7 +343,7 @@
                                                 class="text-[#23c55e] text-xs sm:text-sm font-medium px-2 py-1 bg-[#23c55e]/10 rounded ml-2 flex-shrink-0">Sur
                                                 devis</span>
                                         </div>
-                                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ product.description }}</p>
+                                        <p class="text-gray-600 text-sm mb-4 line-clamp-2" v-html="product.short_description"></p>
                                         <div class="flex flex-wrap sm:flex-nowrap justify-between items-center gap-2">
                                             <NuxtLink :to="`/boutique/${product.id}`"
                                                 class="text-[#23c55e] hover:text-[#1ea550] text-sm font-medium">
@@ -470,7 +473,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import {
     MagnifyingGlassIcon,
     FaceFrownIcon,
@@ -482,11 +485,12 @@ import {
     ChevronDownIcon
 } from '@heroicons/vue/24/solid'
 import { useNuxtApp } from '#app'
+import ImageWithFallback from '~/components/ImageWithFallback.vue'
 
 const { $analytics } = useNuxtApp()
 
 // État pour les filtres mobiles
-const showMobileFilters = ref(false);
+const showMobileFilters = ref(true);
 
 // Fonction pour afficher/masquer les filtres sur mobile
 const toggleMobileFilters = () => {
@@ -526,84 +530,146 @@ const orderForm = ref({
     message: ''
 })
 
-// Produits fictifs
+// Produits fictifs (ajout de données par défaut pour éviter l'écran vide)
 const products = ref([
     {
         id: 1,
-        name: "Casque de sécurité premium",
-        description: "Casque de protection robuste avec aération, idéal pour les chantiers de construction.",
-        price: 12500,
-        category: "epi",
-        image: "/images/boutique/casque.avif",
-        inStock: true,
-        isNew: true
-    },
-    {
-        id: 2,
-        name: "Gilet haute visibilité",
-        description: "Gilet réfléchissant conforme aux normes de sécurité pour une visibilité optimale.",
-        price: 8500,
-        category: "epi",
-        image: "/images/boutique/gilet.avif",
-        inStock: true,
-        isNew: false
-    },
-    {
-        id: 3,
-        name
-            : "Extincteur CO2 5kg",
-        description: "Extincteur à dioxyde de carbone pour feux de classe B et C, idéal pour les bureaux et les cuisines.",
-        price: 45000,
+    name: "Kit d'intervention incendie",
+    description: "<p>Chargement en cours...</p>",
+    short_description: "Chargement en cours...",
+    price: 0,
         category: "incendie",
-        image: "/images/boutique/extincteurs.jpg",
+    image: "/images/placeholder-product.png",
         inStock: true,
-        isNew: false
-    },
-    {
-        id: 4,
-        name: "Détecteur de fumée",
-        description: "Détecteur de fumée autonome avec alarme sonore et visuelle pour une sécurité accrue.",
-        price: 15000,
-        category: "incendie",
-        image: "/images/boutique/detecteur-fumee.webp",
-        inStock: true,
-        isNew: false
-    },
-    {
-        id: 5,
-        name: "Caméra de surveillance IP",
-        description: "Caméra de sécurité connectée avec vision nocturne et détection de mouvement.",
-        price: 95000,
-        category: "electronique",
-        image: "/images/boutique/camera.jpg",
-        inStock: true,
-        isNew: true
-    },
-    {
-        id: 6,
-        name: "Gants de protection anti-coupure",
-        description: "Gants résistants aux coupures et aux perforations, adaptés aux travaux de précision.",
-        price: 7500,
-        category: "epi",
-        image: "/images/boutique/gants.avif",
-        inStock: true,
-        isNew: false
-    },
-    {
-        id: 8,
-        name: "Chaussures de sécurité S3",
-        description: "Chaussures avec embout acier, semelle anti-perforation et absorption d'énergie au talon.",
-        price: 32000,
-        category: "epi",
-        image: "/images/boutique/chaussures.avif",
-        inStock: true,
-        isNew: true
-    }
+    isNew: false,
+    features: [{"text":"Chargement..."}]
+  }
 ])
+
+// Variable pour suivre l'état du chargement
+const isLoading = ref(true)
+const loadError = ref(false)
+
+// Fonction pour récupérer les produits depuis l'API
+const fetchProducts = async (forceRefresh = false) => {
+    console.log(`Fetching products for category: ${activeCategory.value}`);
+    isLoading.value = true;
+    loadError.value = false;
+    
+    try {
+        // Préparation des paramètres de l'API
+        const apiEndpoint = '/api/boutique/products';
+        const apiParams = {};
+        
+        // N'ajouter la catégorie que si elle n'est pas 'all'
+        if (activeCategory.value !== 'all') {
+            apiParams.category = activeCategory.value;
+        }
+        
+        // Force un refraîchissement en ajoutant un timestamp
+        if (forceRefresh) {
+            apiParams._t = Date.now();
+        }
+        
+        console.log('API request params:', apiParams);
+        
+        // Utiliser $fetch au lieu de useFetch pour plus de contrôle
+        const response = await $fetch(apiEndpoint, {
+            method: 'GET',
+            params: apiParams,
+            headers: {
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache'
+            },
+        });
+        
+        console.log('API response received directly:', response);
+        
+        if (response && response.success) {
+            console.log(`Received ${response.products.length} products from API (source: ${response.source || 'unknown'})`);
+            
+            if (response.products.length === 0) {
+                console.warn('No products returned from API');
+                // Garder le produit de chargement si aucun produit n'est retourné
+                return;
+            }
+            
+            // Traitement des produits reçus
+            products.value = response.products.map(product => {
+                console.log(`Processing product in component: ${product.name} (${product.id})`);
+                
+                // Vérifier l'image
+                if (!product.image || product.image === '') {
+                    console.warn(`No image for product ${product.id}, using placeholder`);
+                    product.image = '/images/placeholder-product.png';
+                } else {
+                    console.log(`Product ${product.id} image: ${product.image}`);
+                }
+                
+                return product;
+            });
+        } else {
+            console.error('Error in API response:', response);
+            loadError.value = true;
+        }
+    } catch (error) {
+        console.error('Exception during product fetch:', error);
+        loadError.value = true;
+    } finally {
+        isLoading.value = false;
+    }
+};
+
+// Initialisation immédiate au setup
+activeCategory.value = 'all'; // Forcer la catégorie par défaut dès le début
+nextTick(() => {
+    fetchProducts(true); // Forcer un rafraîchissement complet
+});
+
+// S'assurer que fetchProducts est appelé lors du chargement initial
+onMounted(() => {
+    console.log('Component mounted, refreshing products...');
+    // Réinitialisation et rechargement
+    activeCategory.value = 'all';
+    fetchProducts(true);
+});
+
+// S'assurer que les produits sont mis à jour lors du changement de catégorie
+watch(activeCategory, (newCategory) => {
+    console.log(`Category changed to ${newCategory}, refreshing products...`);
+    fetchProducts();
+});
 
 // Filtrer les produits
 const filteredProducts = computed(() => {
-    let result = [...products.value]
+    // Si aucun produit n'est chargé ou en cas d'erreur, afficher le produit de chargement/erreur
+    if (products.value.length === 0 || loadError.value) {
+        return loadError.value ? [{
+            id: 999,
+            name: "Erreur de chargement",
+            description: "<p>Impossible de charger les produits. Veuillez réessayer plus tard.</p>",
+            short_description: "Erreur de chargement",
+            price: 0,
+            category: "all",
+            image: "/images/placeholder-product.png",
+            inStock: false,
+            isNew: false,
+            features: [{"text":"Erreur"}]
+        }] : [{
+            id: 999,
+            name: "Chargement des produits...",
+            description: "<p>Veuillez patienter pendant le chargement des produits.</p>",
+            short_description: "Chargement en cours...",
+            price: 0,
+            category: "all",
+            image: "/images/placeholder-product.png",
+            inStock: true,
+            isNew: false,
+            features: [{"text":"Chargement..."}]
+        }];
+    }
+    
+    let result = [...products.value];
 
     // Filtrer par catégorie
     if (activeCategory.value !== 'all') {

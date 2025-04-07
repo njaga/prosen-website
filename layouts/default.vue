@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col overflow-x-hidden">
     <!-- Header avec effet de verre -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200">
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
           <!-- Logo -->
@@ -161,6 +161,30 @@
             </NuxtLink>
             
             <NuxtLink 
+              to="/blog"
+              class="relative group px-3 py-2 text-gray-700 hover:text-[#23c55e] transition-colors duration-200"
+              :class="{ 'text-[#23c55e]': $route.path.startsWith('/blog') }"
+            >
+              <span>Blog</span>
+              <span 
+                class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform transition-transform duration-200"
+                :class="$route.path.startsWith('/blog') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
+              ></span>
+            </NuxtLink>
+            
+            <NuxtLink 
+              to="/carrieres"
+              class="relative group px-3 py-2 text-gray-700 hover:text-[#23c55e] transition-colors duration-200"
+              :class="{ 'text-[#23c55e]': $route.path.startsWith('/carrieres') }"
+            >
+              <span>Carrières</span>
+              <span 
+                class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform transition-transform duration-200"
+                :class="$route.path.startsWith('/carrieres') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
+              ></span>
+            </NuxtLink>
+            
+            <NuxtLink 
               to="/about"
               class="relative group px-3 py-2 text-gray-700 hover:text-[#23c55e] transition-colors duration-200"
               :class="{ 'text-[#23c55e]': $route.path === '/about' }"
@@ -270,7 +294,7 @@
       </nav>
     </header>
 
-    <main class="flex-grow">
+    <main class="flex-grow pt-20">
       <slot />
     </main>
 

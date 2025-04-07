@@ -1,0 +1,32 @@
+{
+  "name": "Casque de Protection Chantier PRO",
+  "description": "<p>Casque de sécurité haute résistance conforme aux normes européennes EN 397. Protection optimale contre les chutes d'objets et les risques électriques jusqu'à 1000V. Coque en ABS ultra-résistante avec aération pour le confort.</p><p>Équipé d'une jugulaire ajustable et d'un système de réglage à crémaillère pour s'adapter à toutes les morphologies. Disponible en plusieurs coloris.</p>",
+  "short_description": "Casque de sécurité haute performance conforme aux normes EN 397, idéal pour les environnements de construction.",
+  "price": 1899,
+  "category": "epi",
+  "inStock": true,
+  "isNew": true,
+  "features": [
+    {
+      "text": "Coque en ABS ultra-résistante"
+    },
+    {
+      "text": "Protection contre les risques électriques jusqu'à 1000V"
+    },
+    {
+      "text": "Système de ventilation intégré"
+    },
+    {
+      "text": "Jugulaire ajustable avec décrochage de sécurité"
+    },
+    {
+      "text": "Système de réglage à crémaillère"
+    },
+    {
+      "text": "Poids léger : 380g"
+    },
+    {
+      "text": "Conforme à la norme EN 397"
+    }
+  ]
+} 

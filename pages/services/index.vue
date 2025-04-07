@@ -238,7 +238,7 @@
             }"
             class="mb-4">
             <button
-              @click="item.isOpen = !item.isOpen"
+              @click="toggleFaq(index)"
               class="w-full flex justify-between items-center p-6 bg-white rounded-xl border border-gray-100 hover:border-[#23c55e]/30 transition-colors"
             >
               <span class="text-lg font-semibold text-[#111829]">{{ item.question }}</span>
@@ -372,6 +372,12 @@ const services = [
     icon: UserGroupIcon
   },
   {
+    title: "Sécurité Événementielle",
+    slug: "securite-evenementielle",
+    description: "Solutions complètes pour la sécurité des concerts, cérémonies et événements sportifs.",
+    icon: UserGroupIcon
+  },
+  {
     title: "Nettoyage Professionnel",
     slug: "nettoyage-professionnel",
     description: "Services complets de nettoyage et d'entretien pour tous types de locaux.",
@@ -476,6 +482,11 @@ const faq = ref([
     isOpen: false
   }
 ])
+
+// Fonction pour toggler l'état d'ouverture d'une FAQ
+function toggleFaq(index) {
+  faq.value[index].isOpen = !faq.value[index].isOpen;
+}
 </script>
 
 <style>

@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "collections": [
+    {
+      "collection": "products",
+      "meta": {
+        "accountability": "all",
+        "archive_field": null,
+        "archive_app_filter": true,
+        "archive_value": null,
+        "unarchive_value": null,
+        "sort_field": null,
+        "singleton": false,
+        "note": "Collection des produits de la boutique PROSEN",
+        "icon": "shopping_bag",
+        "color": "#23c55e",
+        "translation": null
+      },
+      "schema": {
+        "name": "products"
+      },
+      "fields": [
+        {
+          "collection": "products",
+          "field": "id",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "readonly": true,
+            "hidden": true,
+            "width": "full",
+            "special": [
+              "uuid"
+            ]
+          },
+          "schema": {
+            "is_primary_key": true,
+            "has_auto_increment": true
+          }
+        },
+        {
+          "collection": "products",
+          "field": "name",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "full",
+            "note": "Nom du produit",
+            "required": true,
+            "options": {
+              "placeholder": "Entrez le nom du produit"
+            }
+          },
+          "schema": {
+            "is_nullable": false
+          }
+        },
+        {
+          "collection": "products",
+          "field": "description",
+          "type": "text",
+          "meta": {
+            "interface": "input-rich-text-html",
+            "width": "full",
+            "note": "Description détaillée du produit",
+            "required": true
+          },
+          "schema": {
+            "is_nullable": false
+          }
+        },
+        {
+          "collection": "products",
+          "field": "short_description",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "full",
+            "note": "Description courte pour la liste des produits",
+            "required": true
+          },
+          "schema": {
+            "is_nullable": false,
+            "max_length": 200
+          }
+        },
+        {
+          "collection": "products",
+          "field": "price",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "width": "half",
+            "note": "Prix en centimes (ex: 12500 pour 125,00)",
+            "required": true
+          },
+          "schema": {
+            "default_value": 0,
+            "is_nullable": false
+          }
+        },
+        {
+          "collection": "products",
+          "field": "category",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "width": "half",
+            "required": true,
+            "options": {
+              "choices": [
+                {
+                  "text": "Équipements de Protection",
+                  "value": "epi"
+                },
+                {
+                  "text": "Sécurité Incendie",
+                  "value": "incendie"
+                },
+                {
+                  "text": "Sécurité Électronique",
+                  "value": "electronique"
+                }
+              ]
+            }
+          },
+          "schema": {
+            "is_nullable": false
+          }
+        },
+        {
+          "collection": "products",
+          "field": "image",
+          "type": "string",
+          "meta": {
+            "interface": "file-image",
+            "width": "full",
+            "required": true,
+            "note": "Image principale du produit",
+            "options": {
+              "folder": "products"
+            }
+          },
+          "schema": {
+            "is_nullable": false
+          }
+        },
+        {
+          "collection": "products",
+          "field": "inStock",
+          "type": "boolean",
+          "meta": {
+            "interface": "boolean",
+            "width": "half",
+            "required": true,
+            "note": "Indique si le produit est en stock"
+          },
+          "schema": {
+            "default_value": true,
+            "is_nullable": false
+          }
+        },
+        {
+          "collection": "products",
+          "field": "isNew",
+          "type": "boolean",
+          "meta": {
+            "interface": "boolean",
+            "width": "half",
+            "note": "Indique si le produit est nouveau"
+          },
+          "schema": {
+            "default_value": false,
+            "is_nullable": true
+          }
+        },
+        {
+          "collection": "products",
+          "field": "features",
+          "type": "json",
+          "meta": {
+            "interface": "list",
+            "width": "full",
+            "note": "Liste des caractéristiques du produit",
+            "options": {
+              "template": "{{text}}",
+              "fields": [
+                {
+                  "field": "text",
+                  "type": "string",
+                  "name": "Caractéristique",
+                  "meta": {
+                    "interface": "input",
+                    "width": "full"
+                  }
+                }
+              ]
+            }
+          },
+          "schema": {
+            "is_nullable": true
+          }
+        },
+        {
+          "collection": "products",
+          "field": "date_created",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true,
+            "width": "half",
+            "display": "datetime",
+            "special": [
+              "date-created"
+            ]
+          },
+          "schema": {
+            "is_nullable": true
+          }
+        },
+        {
+          "collection": "products",
+          "field": "date_updated",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true,
+            "width": "half",
+            "display": "datetime",
+            "special": [
+              "date-updated"
+            ]
+          },
+          "schema": {
+            "is_nullable": true
+          }
+        }
+      ]
+    }
+  ]
+} 

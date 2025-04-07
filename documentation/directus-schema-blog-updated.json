@@ -1,0 +1,206 @@
+{
+  "collections": {
+    "articles": {
+      "fields": [
+        {
+          "field": "id",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "readonly": true,
+            "hidden": true,
+            "width": "full",
+            "special": ["uuid"]
+          }
+        },
+        {
+          "field": "title",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "options": {
+              "placeholder": "Titre de l'article"
+            },
+            "width": "full",
+            "required": true
+          }
+        },
+        {
+          "field": "slug",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "options": {
+              "placeholder": "Identifiant URL-friendly (ex: mon-article-blog)",
+              "slug": true,
+              "slugify": {
+                "fields": ["title"],
+                "separator": "-"
+              }
+            },
+            "width": "full",
+            "required": true
+          }
+        },
+        {
+          "field": "content",
+          "type": "text",
+          "meta": {
+            "interface": "input-rich-text-html",
+            "options": {
+              "placeholder": "Contenu de l'article",
+              "toolbar": [
+                "bold",
+                "italic",
+                "underline",
+                "removeFormat",
+                "link",
+                "bullist",
+                "numlist",
+                "blockquote",
+                "h2",
+                "h3",
+                "image",
+                "table"
+              ]
+            },
+            "width": "full",
+            "required": true
+          }
+        },
+        {
+          "field": "excerpt",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "options": {
+              "placeholder": "Résumé court de l'article (150-200 caractères)"
+            },
+            "width": "full",
+            "required": true
+          }
+        },
+        {
+          "field": "category",
+          "type": "json",
+          "meta": {
+            "interface": "select-multiple-dropdown",
+            "options": {
+              "choices": [
+                {
+                  "text": "Tendances",
+                  "value": "Tendances"
+                },
+                {
+                  "text": "Conseils",
+                  "value": "Conseils"
+                },
+                {
+                  "text": "Guide",
+                  "value": "Guide"
+                },
+                {
+                  "text": "Actualités",
+                  "value": "Actualités"
+                },
+                {
+                  "text": "Témoignages",
+                  "value": "Témoignages"
+                }
+              ]
+            },
+            "width": "half",
+            "required": true,
+            "note": "Vous pouvez sélectionner plusieurs catégories"
+          }
+        },
+        {
+          "field": "date",
+          "type": "date",
+          "meta": {
+            "interface": "datetime",
+            "options": {
+              "includeTime": false
+            },
+            "width": "half",
+            "required": true,
+            "display": "datetime"
+          }
+        },
+        {
+          "field": "image",
+          "type": "file",
+          "meta": {
+            "interface": "file-image",
+            "options": {
+              "folder": "blog"
+            },
+            "width": "full",
+            "required": true,
+            "note": "Format recommandé: 1200×675px (16:9)"
+          }
+        },
+        {
+          "field": "author",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "options": {
+              "placeholder": "Auteur de l'article",
+              "default": "Équipe PROSEN"
+            },
+            "width": "half"
+          }
+        },
+        {
+          "field": "published",
+          "type": "boolean",
+          "meta": {
+            "interface": "boolean",
+            "options": {
+              "label": "Publié"
+            },
+            "width": "half",
+            "required": true
+          }
+        },
+        {
+          "field": "related_articles",
+          "type": "alias",
+          "meta": {
+            "interface": "list-m2m",
+            "options": {
+              "template": "{{title}}",
+              "collection": "articles"
+            },
+            "width": "full",
+            "special": ["m2m"],
+            "note": "Articles liés qui apparaîtront en bas de l'article"
+          }
+        },
+        {
+          "field": "date_created",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true,
+            "width": "half",
+            "display": "datetime",
+            "special": ["date-created"]
+          }
+        },
+        {
+          "field": "date_updated",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true,
+            "width": "half",
+            "display": "datetime",
+            "special": ["date-updated"]
+          }
+        }
+      ]
+    }
+  }
+} 
