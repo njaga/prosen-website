@@ -1,0 +1,10 @@
+# Exclure les fichiers qui ne sont pas nécessaires dans l'image Docker
+database/
+.git/
+.gitignore
+docker-compose.yml
+render.yaml
+*.csv
+*.json
+README.md
+node_modules/ 

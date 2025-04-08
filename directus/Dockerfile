@@ -7,13 +7,6 @@ ENV ADMIN_PASSWORD=directus2025
 ENV DB_CLIENT=pg
 ENV WEBSOCKETS_ENABLED=true
 
-# Créer les répertoires nécessaires
-RUN mkdir -p /directus/uploads /directus/extensions
-
-# Copier les fichiers de votre projet
-COPY ./uploads /directus/uploads
-COPY ./extensions /directus/extensions
-
 # Exposer le port 8055
 EXPOSE 8055
 
