@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: directus-prosen
+    env: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /server/health
+    envVars:
+      - key: KEY
+        generateValue: true
+      - key: SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@example.com
+      - key: ADMIN_PASSWORD
+        value: directus-admin
+      - key: DB_CLIENT
+        value: pg
+      - key: DB_HOST
+        fromDatabase:
+          name: directus-prosen-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: directus-prosen-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: directus-prosen-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: directus-prosen-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: directus-prosen-db
+          property: password
+      - key: STORAGE_LOCATIONS
+        value: local
+      - key: STORAGE_LOCAL_DRIVER
+        value: local
+      - key: STORAGE_LOCAL_ROOT
+        value: ./uploads
+      - key: PUBLIC_URL
+        value: https://directus-prosen.onrender.com
+
+databases:
+  - name: directus-prosen-db
+    region: frankfurt
+    plan: free 

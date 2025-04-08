@@ -160,17 +160,70 @@
               ></span>
             </NuxtLink>
             
-            <NuxtLink 
-              to="/blog"
-              class="relative group px-3 py-2 text-gray-700 hover:text-[#23c55e] transition-colors duration-200"
-              :class="{ 'text-[#23c55e]': $route.path.startsWith('/blog') }"
-            >
-              <span>Blog</span>
-              <span 
-                class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform transition-transform duration-200"
-                :class="$route.path.startsWith('/blog') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
-              ></span>
-            </NuxtLink>
+            <div class="relative group">
+              <button
+                @mouseenter="showDiscoverMenu = true"
+                @mouseleave="showDiscoverMenu = false"
+                class="relative group px-3 py-2 text-gray-700 hover:text-[#23c55e] transition-colors duration-200 flex items-center"
+                :class="{ 'text-[#23c55e]': $route.path.startsWith('/about') || $route.path.startsWith('/blog') || $route.path.startsWith('/contact') }"
+              >
+                <span>Découvrir Prosen</span>
+                <ChevronDownIcon class="w-4 h-4 ml-1" />
+                <span 
+                  class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform transition-transform duration-200"
+                  :class="$route.path.startsWith('/about') || $route.path.startsWith('/blog') || $route.path.startsWith('/contact') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
+                ></span>
+              </button>
+              
+              <!-- Dropdown Menu -->
+              <div 
+                v-show="showDiscoverMenu"
+                @mouseenter="showDiscoverMenu = true"
+                @mouseleave="showDiscoverMenu = false"
+                class="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 w-64 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden"
+              >
+                <div class="py-2">
+                  <NuxtLink 
+                    to="/about"
+                    class="flex items-start px-4 py-3 hover:bg-gray-50"
+                  >
+                    <div class="flex-shrink-0 w-8 h-8 bg-[#23c55e]/10 rounded-lg flex items-center justify-center">
+                      <BuildingOfficeIcon class="w-5 h-5 text-[#23c55e]" />
+                    </div>
+                    <div class="ml-3">
+                      <h3 class="text-base font-medium text-gray-900">À propos</h3>
+                      <p class="mt-1 text-sm text-gray-500">Découvrez notre histoire</p>
+                    </div>
+                  </NuxtLink>
+
+                  <NuxtLink 
+                    to="/blog"
+                    class="flex items-start px-4 py-3 hover:bg-gray-50"
+                  >
+                    <div class="flex-shrink-0 w-8 h-8 bg-[#23c55e]/10 rounded-lg flex items-center justify-center">
+                      <NewspaperIcon class="w-5 h-5 text-[#23c55e]" />
+                    </div>
+                    <div class="ml-3">
+                      <h3 class="text-base font-medium text-gray-900">Blog</h3>
+                      <p class="mt-1 text-sm text-gray-500">Actualités et articles</p>
+                    </div>
+                  </NuxtLink>
+
+                  <NuxtLink 
+                    to="/contact"
+                    class="flex items-start px-4 py-3 hover:bg-gray-50"
+                  >
+                    <div class="flex-shrink-0 w-8 h-8 bg-[#23c55e]/10 rounded-lg flex items-center justify-center">
+                      <EnvelopeIcon class="w-5 h-5 text-[#23c55e]" />
+                    </div>
+                    <div class="ml-3">
+                      <h3 class="text-base font-medium text-gray-900">Contact</h3>
+                      <p class="mt-1 text-sm text-gray-500">Nous contacter</p>
+                    </div>
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
             
             <NuxtLink 
               to="/carrieres"
@@ -181,30 +234,6 @@
               <span 
                 class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform transition-transform duration-200"
                 :class="$route.path.startsWith('/carrieres') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
-              ></span>
-            </NuxtLink>
-            
-            <NuxtLink 
-              to="/about"
-              class="relative group px-3 py-2 text-gray-700 hover:text-[#23c55e] transition-colors duration-200"
-              :class="{ 'text-[#23c55e]': $route.path === '/about' }"
-            >
-              <span>À propos</span>
-              <span 
-                class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform transition-transform duration-200"
-                :class="$route.path === '/about' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
-              ></span>
-            </NuxtLink>
-            
-            <NuxtLink
-              to="/contact"
-              class="relative group px-3 py-2 text-gray-700 hover:text-[#23c55e] transition-colors duration-200"
-              :class="{ 'text-[#23c55e]': $route.path === '/contact' }"
-            >
-              <span>Contact</span>
-              <span 
-                class="absolute bottom-0 left-0 w-full h-0.5 bg-[#23c55e] transform transition-transform duration-200"
-                :class="$route.path === '/contact' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
               ></span>
             </NuxtLink>
             
@@ -271,15 +300,48 @@
                 </NuxtLink>
               </div>
             </div>
-            
-            <NuxtLink 
-              to="/contact"
-              class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
-              :class="{ 'bg-gray-100 text-[#23c55e]': $route.path === '/contact' }"
-              @click="isMenuOpen = false"
-            >
-              Contact
-            </NuxtLink>
+
+            <!-- Menu Découvrir pour mobile -->
+            <div>
+              <button 
+                @click="mobileDiscoverOpen = !mobileDiscoverOpen" 
+                class="flex items-center justify-between w-full px-4 py-3 text-left text-gray-700 hover:text-[#23c55e] hover:bg-gray-50"
+                :class="{ 'text-[#23c55e]': $route.path.startsWith('/about') || $route.path.startsWith('/blog') || $route.path.startsWith('/contact') }"
+              >
+                <span>Découvrir Prosen</span>
+                <span>
+                  <ChevronDownIcon v-if="!mobileDiscoverOpen" class="w-5 h-5" />
+                  <ChevronUpIcon v-else class="w-5 h-5" />
+                </span>
+              </button>
+
+              <div v-show="mobileDiscoverOpen" class="pl-4">
+                <NuxtLink 
+                  to="/about"
+                  class="flex items-center px-4 py-2 text-gray-600 hover:text-[#23c55e]"
+                  @click="isMenuOpen = false; mobileDiscoverOpen = false"
+                >
+                  <BuildingOfficeIcon class="w-5 h-5 mr-3 text-[#23c55e]" />
+                  <span>À propos</span>
+                </NuxtLink>
+                <NuxtLink 
+                  to="/blog"
+                  class="flex items-center px-4 py-2 text-gray-600 hover:text-[#23c55e]"
+                  @click="isMenuOpen = false; mobileDiscoverOpen = false"
+                >
+                  <NewspaperIcon class="w-5 h-5 mr-3 text-[#23c55e]" />
+                  <span>Blog</span>
+                </NuxtLink>
+                <NuxtLink 
+                  to="/contact"
+                  class="flex items-center px-4 py-2 text-gray-600 hover:text-[#23c55e]"
+                  @click="isMenuOpen = false; mobileDiscoverOpen = false"
+                >
+                  <EnvelopeIcon class="w-5 h-5 mr-3 text-[#23c55e]" />
+                  <span>Contact</span>
+                </NuxtLink>
+              </div>
+            </div>
             
             <NuxtLink
               to="/devis"
@@ -394,7 +456,9 @@ import {
   SparklesIcon,
   FireIcon,
   TruckIcon,
-  ChevronUpIcon
+  ChevronUpIcon,
+  BuildingOfficeIcon,
+  NewspaperIcon
 } from '@heroicons/vue/24/outline'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -408,11 +472,11 @@ import {
 const isMenuOpen = ref(false)
 const showServicesMenu = ref(false)
 const mobileServicesOpen = ref(false)
+const showDiscoverMenu = ref(false)
+const mobileDiscoverOpen = ref(false)
 
 const menuItems = [
   { name: 'Accueil', path: '/' },
-  { name: 'À propos', path: '/about' },
-  { name: 'Blog', path: '/blog' },
   { name: 'Boutique', path: '/boutique' },
   { name: 'Carrières', path: '/carrieres' }
 ]

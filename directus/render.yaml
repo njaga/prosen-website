@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: directus
+    runtime: docker
+    repo: https://github.com/njaga/prosen-website
+    branch: main
+    rootDir: directus
+    buildFilter:
+      paths:
+        - directus/**
+    healthCheckPath: /server/health
+    envVars:
+      - key: SECRET
+        value: prosen-directus-secret-key
+      - key: ADMIN_EMAIL
+        value: admin@example.com
+      - key: ADMIN_PASSWORD
+        value: directus2025
+      - key: DB_CLIENT
+        value: pg
+      - key: DB_HOST
+        fromDatabase:
+          name: directus-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: directus-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: directus-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: directus-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: directus-db
+          property: password
+      - key: WEBSOCKETS_ENABLED
+        value: "true"
+    disk:
+      name: directus-data
+      mountPath: /directus/uploads
+      sizeGB: 10
+
+databases:
+  - name: directus-db
+    databaseName: directus
+    user: directus 

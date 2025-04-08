@@ -1,1 +1,28 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
 
+# Sitemap
+Sitemap: https://prosen.sn/sitemap.xml
+
+# Interdire l'accès aux fichiers sensibles
+Disallow: /admin/
+Disallow: /.env
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /server/
+Disallow: /assets/
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /*?*
+
+# Permettre l'accès aux ressources statiques
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /images/
+Allow: /fonts/

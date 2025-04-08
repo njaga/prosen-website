@@ -1,0 +1,22 @@
+# Base de données SQLite
+/database/*.db
+/database/*.db-journal
+
+# Fichiers uploadés
+/uploads/*
+!/uploads/.gitkeep
+
+# Logs
+/logs
+*.log
+
+# Node modules (si vous avez des extensions personnalisées)
+/extensions/*/node_modules
+
+# Fichiers d'environnement
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db 
