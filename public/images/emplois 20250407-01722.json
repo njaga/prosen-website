@@ -1,31 +1,40 @@
 [
 	{
 		"id": 1,
-		"titre": "Test",
-		"slug": "agent-test",
-		"description": "<p>Nous recherchons des agents de s&eacute;curit&eacute; qualifi&eacute;s pour assurer la surveillance et la protection de sites commerciaux &agrave; Dakar.</p>\n<h2>Missions principales :</h2>\n<ul>\n<li>Contr&ocirc;le des acc&egrave;s et v&eacute;rification des badges</li>\n<li>Surveillance des locaux par rondes r&eacute;guli&egrave;res</li>\n<li>Gestion des incidents de s&eacute;curit&eacute;</li>\n<li>Tenue du registre des &eacute;v&eacute;nements</li>\n<li>Accueil et orientation des visiteurs</li>\n</ul>\n<h2>Profil recherch&eacute; :</h2>\n<ul>\n<li>Certification agent de s&eacute;curit&eacute; obligatoire</li>\n<li>Exp&eacute;rience de 1 &agrave; 2 ans minimum dans un poste similaire</li>\n<li>Excellentes capacit&eacute;s d'observation et de vigilance</li>\n<li>Rigueur et professionnalisme</li>\n<li>Ma&icirc;trise du fran&ccedil;ais et du wolof, anglais appr&eacute;ci&eacute;</li>\n</ul>\n<h2>Nous offrons :</h2>\n<ul>\n<li>Formation continue et accompagnement</li>\n<li>Possibilit&eacute;s d'&eacute;volution interne</li>\n<li>Horaires adaptables selon les contraintes</li>\n<li>&Eacute;quipement professionnel fourni</li>\n<li>R&eacute;mun&eacute;ration attractive selon profil et exp&eacute;rience</li>\n</ul>\n<p>Rejoignez PROSEN, entreprise leader dans le domaine de la s&eacute;curit&eacute; au S&eacute;n&eacute;gal, et participez &agrave; la protection des biens et des personnes dans un environnement professionnel valorisant.</p>",
-		"resume": "Nous recherchons des agents à Dakar",
-		"type_contrat": "stage",
+		"titre": "Agent de Sécurité",
+		"slug": "agent-securite",
+		"description": "<p>PROSEN recrute des agents de s&eacute;curit&eacute; pour renforcer ses &eacute;quipes sur Dakar et sa r&eacute;gion.</p>\n\n<h2>Missions principales :</h2>\n<ul>\n<li>Surveillance et protection des sites</li>\n<li>Contr&ocirc;le des acc&egrave;s et v&eacute;rification des identit&eacute;s</li>\n<li>Rondes de s&eacute;curit&eacute; r&eacute;guli&egrave;res</li>\n<li>Gestion des incidents et signalement</li>\n<li>R&eacute;daction des rapports quotidiens</li>\n</ul>\n\n<h2>Profil recherch&eacute; :</h2>\n<ul>\n<li>Aucune qualification sp&eacute;cifique requise</li>\n<li>Bonne condition physique</li>\n<li>Capacit&eacute; d'observation et de r&eacute;action</li>\n<li>Rigueur et professionnalisme</li>\n<li>Ma&icirc;trise du fran&ccedil;ais et du wolof</li>\n</ul>\n\n<h2>Documents &agrave; fournir :</h2>\n<ul>\n<li>Photocopie de la CNI</li>\n<li>3 photos d'identit&eacute;</li>\n<li>Casier judiciaire</li>\n<li>Certificat de domicile</li>\n</ul>\n\n<h2>Nous offrons :</h2>\n<ul>\n<li>Formation initiale et continue</li>\n<li>Contrat CDD apr&egrave;s p&eacute;riode d'immersion</li>\n<li>Horaires adaptables</li>\n<li>Mutuelle d'entreprise</li>\n<li>R&eacute;mun&eacute;ration de 85 000 FCFA par mois</li>\n</ul>",
+		"resume": "Recrutement d'agents de sécurité pour la surveillance et la protection de sites à Dakar, aucune expérience requise",
+		"type_contrat": "cdd",
 		"categorie": "agent",
-		"lieu": "Dakae",
+		"lieu": "Dakar",
 		"experience": "debutant",
 		"salaire": "85000",
 		"avantages": [
 			{
-				"Avantage": "Test 1"
+				"Avantage": "Formation continue"
 			},
 			{
-				"Avantage": "Test 2"
+				"Avantage": "Mutuelle d'entreprise"
+			},
+			{
+				"Avantage": "Équipement fourni"
 			}
 		],
 		"competences": [
 			{
-				"Competence": "Test 1"
+				"Competence": "Surveillance"
+			},
+			{
+				"Competence": "Gestion des incidents"
+			},
+			{
+				"Competence": "Rédaction de rapports"
 			}
 		],
-		"date": "2025-04-07T00:16:11.000Z",
+		"date": "2024-03-20T00:00:00.000Z",
 		"publie": true,
-		"date_created": "2025-04-07T00:16:25.000Z",
+		"date_created": "2024-03-20T00:00:00.000Z",
 		"date_updated": null
 	}
 ]

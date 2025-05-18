@@ -25,11 +25,11 @@
         <!-- Navigation -->
         <nav class="sticky top-20 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200">
             <div class="max-w-7xl mx-auto">
-                <div class="flex justify-center space-x-8 overflow-x-auto scrollbar-hide px-4">
+                <div class="flex justify-start md:justify-center space-x-4 md:space-x-8 overflow-x-auto scrollbar-hide px-2 md:px-4">
                     <a v-for="section in sections" :key="section.id" :href="`#${section.id}`"
-                        class="py-4 px-2 border-b-2 border-transparent hover:border-[#23c55e] text-gray-600 hover:text-[#23c55e] transition-colors whitespace-nowrap text-sm font-medium">
-                        <div class="flex items-center space-x-2">
-                            <component :is="section.icon" class="w-5 h-5" />
+                        class="py-3 md:py-4 px-2 border-b-2 border-transparent hover:border-[#23c55e] text-gray-600 hover:text-[#23c55e] transition-colors whitespace-nowrap text-xs md:text-sm font-medium">
+                        <div class="flex items-center space-x-1 md:space-x-2">
+                            <component :is="section.icon" class="w-4 h-4 md:w-5 md:h-5" />
                             <span>{{ section.title }}</span>
                         </div>
                     </a>
@@ -223,7 +223,7 @@
                                     </p>
                                     <p class="flex items-center">
                                         <DocumentTextIcon class="w-5 h-5 text-[#23c55e] mr-2" />
-                                        <span>RCCM : SN DKR 2015 8 23592</span>
+                                        <span>RCCM : SN DKR 2015 B 23592</span>
                                     </p>
                                     <p class="flex items-center">
                                         <CurrencyDollarIcon class="w-5 h-5 text-[#23c55e] mr-2" />

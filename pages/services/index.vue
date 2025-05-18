@@ -412,6 +412,18 @@ const services = [
     slug: "conseil-securite",
     description: "Services de conseil et d'audit pour optimiser votre sécurité.",
     icon: ClipboardDocumentCheckIcon
+  },
+  {
+    title: "Cybersécurité",
+    slug: "cybersecurite",
+    description: "Protection de vos systèmes informatiques et données sensibles contre les cybermenaces.",
+    icon: ShieldCheckIcon
+  },
+  {
+    title: "Géolocalisation de Véhicules",
+    slug: "geolocalisation-vehicules",
+    description: "Suivi en temps réel et gestion de votre flotte de véhicules.",
+    icon: TruckIcon
   }
 ]
 

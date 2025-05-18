@@ -264,7 +264,7 @@
       </div>
 
       <div class="max-w-2xl mx-auto">
-        <form @submit.prevent="soumettreFormulaire" class="space-y-6">
+        <form @submit.prevent="handleSubmit" class="space-y-6">
           <div class="bg-white rounded-xl shadow-sm p-6 space-y-6">
             <!-- Informations personnelles -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -395,7 +395,7 @@
                         ref="fileInput"
                         type="file"
                         class="sr-only"
-                        @change="handleFileUpload"
+                        @change="handleFileChange"
                         accept=".pdf,.doc,.docx"
                         required
                       />
@@ -437,6 +437,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { navigateTo } from '#app'
 import {
   StarIcon,
   AcademicCapIcon,
@@ -670,16 +671,16 @@ const handleSubmit = async () => {
       
       submitStatus.value = {
         success: true,
-        message: 'Votre candidature a été envoyée avec succès ! Nous l\'examinerons et vous contacterons dans les plus brefs délais.'
+        message: 'Votre candidature a été envoyée avec succès ! Un email de confirmation vous a été envoyé.'
       };
-      
-      // Faire défiler vers le haut pour voir la notification
-      window.scrollTo({ top: document.getElementById('candidature').offsetTop - 100, behavior: 'smooth' });
       
       // Suivre l'événement de soumission réussie
       if ($analytics) {
         $analytics.trackEvent('Formulaire', 'Soumission', 'Candidature', 1);
       }
+
+      // Redirection vers la page de confirmation
+      navigateTo('/carrieres-confirmation');
     } else {
       submitStatus.value = {
         success: false,

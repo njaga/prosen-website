@@ -13,7 +13,8 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxtjs/tailwindcss',
-    '@vueuse/motion/nuxt'
+    '@vueuse/motion/nuxt',
+    '@pinia/nuxt'
   ],
 
   // Configuration Directus

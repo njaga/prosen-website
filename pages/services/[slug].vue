@@ -989,6 +989,148 @@ const services = {
         isOpen: false
       }
     ]
+  },
+  'cybersecurite': {
+    title: 'Cybersécurité',
+    description: 'Protection complète de vos systèmes informatiques et données sensibles contre les cybermenaces.',
+    detailedDescription: 'Notre service de cybersécurité offre une protection complète contre les menaces numériques. Nos experts mettent en place des solutions de sécurité avancées pour protéger vos systèmes d\'information, vos données sensibles et votre infrastructure réseau.',
+    additionalInfo: 'Nous assurons une surveillance continue de vos systèmes et réagissons rapidement aux incidents de sécurité. Notre approche proactive inclut des tests de pénétration réguliers et des mises à jour de sécurité pour maintenir une protection optimale.',
+    keyPoints: [
+      'Protection contre les cyberattaques',
+      'Surveillance 24/7 des systèmes',
+      'Tests de pénétration réguliers',
+      'Conformité aux normes de sécurité',
+      'Réponse rapide aux incidents'
+    ],
+    features: [
+      'Audit de sécurité informatique',
+      'Protection contre les malwares',
+      'Sécurisation des réseaux',
+      'Gestion des accès',
+      'Sauvegarde des données',
+      'Formation à la cybersécurité',
+      'Surveillance du dark web',
+      'Plan de reprise d\'activité'
+    ],
+    process: [
+      {
+        title: 'Audit',
+        description: 'Évaluation complète de votre infrastructure IT et identification des vulnérabilités'
+      },
+      {
+        title: 'Protection',
+        description: 'Mise en place des solutions de sécurité adaptées'
+      },
+      {
+        title: 'Surveillance',
+        description: 'Monitoring continu et réponse aux incidents'
+      }
+    ],
+    sectors: [
+      {
+        name: 'Entreprises',
+        description: 'Protection des systèmes d\'information et données sensibles',
+        icon: BuildingOfficeIcon
+      },
+      {
+        name: 'Services Financiers',
+        description: 'Sécurité renforcée pour le secteur financier',
+        icon: BriefcaseIcon
+      },
+      {
+        name: 'E-commerce',
+        description: 'Protection des plateformes de vente en ligne',
+        icon: ShoppingBagIcon
+      }
+    ],
+    faq: [
+      {
+        question: 'Comment protégez-vous contre les ransomwares ?',
+        answer: 'Notre approche combine plusieurs niveaux de protection : systèmes anti-malware avancés, sauvegardes régulières, formation des utilisateurs et protocoles de réponse aux incidents. Nous mettons également en place des systèmes de détection précoce des menaces.',
+        isOpen: false
+      },
+      {
+        question: 'Proposez-vous des formations pour les employés ?',
+        answer: 'Oui, nous proposons des formations régulières pour sensibiliser vos employés aux bonnes pratiques de cybersécurité. Ces formations couvrent la reconnaissance des tentatives de phishing, la gestion des mots de passe et les comportements sécurisés en ligne.',
+        isOpen: false
+      },
+      {
+        question: 'Quel est le délai d\'intervention en cas d\'incident ?',
+        answer: 'Notre équipe de surveillance assure une réponse immédiate 24/7. En cas d\'incident critique, notre équipe d\'intervention peut commencer à traiter le problème en moins de 30 minutes.',
+        isOpen: false
+      }
+    ]
+  },
+  'geolocalisation-vehicules': {
+    title: 'Géolocalisation de Véhicules',
+    description: 'Solutions avancées de suivi et gestion de flotte en temps réel.',
+    detailedDescription: 'Notre service de géolocalisation de véhicules permet un suivi précis et en temps réel de votre flotte. Nous utilisons des technologies GPS avancées couplées à une plateforme de gestion intuitive pour optimiser vos opérations de transport.',
+    additionalInfo: 'Notre solution inclut des fonctionnalités avancées comme le suivi de la consommation de carburant, l\'analyse des comportements de conduite et la génération de rapports détaillés pour une gestion optimale de votre flotte.',
+    keyPoints: [
+      'Suivi en temps réel',
+      'Historique des trajets',
+      'Optimisation des itinéraires',
+      'Alertes personnalisables',
+      'Rapports détaillés'
+    ],
+    features: [
+      'Localisation GPS précise',
+      'Suivi de consommation',
+      'Analyse de conduite',
+      'Gestion des maintenances',
+      'Alertes de sécurité',
+      'Rapports automatisés',
+      'Application mobile',
+      'Support technique 24/7'
+    ],
+    process: [
+      {
+        title: 'Installation',
+        description: 'Mise en place des dispositifs GPS sur vos véhicules'
+      },
+      {
+        title: 'Configuration',
+        description: 'Paramétrage de la plateforme selon vos besoins'
+      },
+      {
+        title: 'Formation',
+        description: 'Formation de vos équipes à l\'utilisation du système'
+      }
+    ],
+    sectors: [
+      {
+        name: 'Transport & Logistique',
+        description: 'Optimisation des flottes de transport et livraison',
+        icon: TruckIcon
+      },
+      {
+        name: 'Services de Sécurité',
+        description: 'Suivi des véhicules d\'intervention et patrouilles',
+        icon: ShieldCheckIcon
+      },
+      {
+        name: 'Services Publics',
+        description: 'Gestion des flottes de véhicules municipaux et administratifs',
+        icon: BuildingOfficeIcon
+      }
+    ],
+    faq: [
+      {
+        question: 'Quelle est la précision de la géolocalisation ?',
+        answer: 'Notre système GPS offre une précision de localisation jusqu\'à 2-3 mètres en conditions optimales. La fréquence de mise à jour de la position peut être ajustée selon vos besoins, jusqu\'à une actualisation en temps réel.',
+        isOpen: false
+      },
+      {
+        question: 'Le système fonctionne-t-il hors connexion ?',
+        answer: 'Oui, nos boîtiers GPS stockent les données même en absence de connexion réseau. Une fois la connexion rétablie, toutes les données sont synchronisées automatiquement avec la plateforme.',
+        isOpen: false
+      },
+      {
+        question: 'Puis-je définir des zones de surveillance spécifiques ?',
+        answer: 'Oui, vous pouvez définir des géozones personnalisées et recevoir des alertes lorsque vos véhicules entrent ou sortent de ces zones. Cette fonction est particulièrement utile pour la gestion des itinéraires et la sécurité.',
+        isOpen: false
+      }
+    ]
   }
 };
 

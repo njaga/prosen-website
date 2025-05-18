@@ -206,6 +206,92 @@
         </div>
       </section>
 
+      <!-- Centre Opérations de Besoins et d'Urgence (COBU) -->
+      <section class="py-16 md:py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-10 md:mb-16">
+            <span class="text-[#23c55e] font-semibold text-xs sm:text-sm uppercase tracking-wider">Service d'urgence</span>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#111829] mt-3 md:mt-4 mb-4 md:mb-6">Centre Opérations de Besoins et d'Urgence</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto text-sm sm:text-base">
+              Notre COBU est opérationnel en permanence pour garantir une réponse immédiate à tous vos besoins de sécurité
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="relative order-2 lg:order-1" v-motion :initial="{ opacity: 0, y: 30 }" :visible="{ opacity: 1, y: 0 }">
+              <div class="lg:max-w-lg">
+                <div class="bg-[#111829] rounded-xl p-8 shadow-xl relative overflow-hidden">
+                  <div class="absolute top-0 right-0 w-20 h-20 bg-[#23c55e]/20 rounded-bl-xl z-0"></div>
+                  <h3 class="text-xl text-white font-bold mb-4 relative z-10">Contactez notre COBU</h3>
+                  <p class="text-gray-300 mb-6 relative z-10">
+                    Notre Centre Opérations de Besoins et d'Urgence est accessible 24h/24 et 7j/7 pour répondre à toutes vos demandes et urgences.
+                  </p>
+                  
+                  <div class="flex items-center space-x-4 mb-4 relative z-10">
+                    <div class="w-12 h-12 bg-[#23c55e]/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <PhoneIcon class="h-6 w-6 text-[#23c55e]" />
+                    </div>
+                    <div>
+                      <h4 class="text-white font-semibold">Numéro d'urgence</h4>
+                      <a href="tel:+221765984214" class="text-[#23c55e] hover:underline">+221 76 598 42 14</a>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 mb-4 relative z-10">
+                    <ul class="space-y-3">
+                      <li class="flex items-start">
+                        <CheckCircleIcon class="w-5 h-5 text-[#23c55e] mt-0.5 flex-shrink-0" />
+                        <span class="ml-2 text-gray-300">Appel téléphonique direct</span>
+                      </li>
+                      <li class="flex items-start">
+                        <CheckCircleIcon class="w-5 h-5 text-[#23c55e] mt-0.5 flex-shrink-0" />
+                        <span class="ml-2 text-gray-300">SMS</span>
+                      </li>
+                      <li class="flex items-start">
+                        <CheckCircleIcon class="w-5 h-5 text-[#23c55e] mt-0.5 flex-shrink-0" />
+                        <span class="ml-2 text-gray-300">WhatsApp</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div class="flex items-center relative z-10">
+                    <div class="w-4 h-4 bg-green-500 rounded-full animate-ping absolute opacity-75"></div>
+                    <div class="w-4 h-4 bg-green-500 rounded-full relative"></div>
+                    <span class="ml-3 text-gray-300">Opérationnel 24/7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="order-1 lg:order-2" v-motion :initial="{ opacity: 0, y: 30 }" :visible="{ opacity: 1, y: 0, transition: { delay: 200 } }">
+              <div class="space-y-6">
+                <h3 class="text-2xl font-bold text-[#111829]">Une intervention rapide et efficace</h3>
+                <p class="text-gray-600">
+                  Chez PROSEN, nous comprenons que les situations d'urgence nécessitent une réponse immédiate. C'est pourquoi notre Centre Opérations de Besoins et d'Urgence (COBU) est disponible 24h/24 et 7j/7 pour assurer votre sécurité à tout moment.
+                </p>
+                <p class="text-gray-600">
+                  Notre équipe qualifiée est prête à répondre à vos demandes et à coordonner les interventions nécessaires pour gérer efficacement toute situation critique.
+                </p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                  <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                    <LockClosedIcon class="w-8 h-8 text-[#23c55e] mb-3" />
+                    <h4 class="text-lg font-semibold text-[#111829] mb-2">Gestion des incidents</h4>
+                    <p class="text-gray-600 text-sm">Protocoles d'intervention rapide et adaptés à chaque type d'urgence</p>
+                  </div>
+                  
+                  <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                    <ClockIcon class="w-8 h-8 text-[#23c55e] mb-3" />
+                    <h4 class="text-lg font-semibold text-[#111829] mb-2">Réactivité garantie</h4>
+                    <p class="text-gray-600 text-sm">Temps de réponse optimisé pour une action immédiate et efficace</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Nos Ressources -->
       <section class="py-16 md:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -722,7 +808,10 @@ import {
   FingerPrintIcon,
   ChartBarIcon,
   LightBulbIcon,
-  GlobeAltIcon
+  GlobeAltIcon,
+  PhoneIcon,
+  LockClosedIcon,
+  ClockIcon
 } from '@heroicons/vue/24/solid'
 import { ref } from 'vue'
 

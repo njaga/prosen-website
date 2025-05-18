@@ -7,7 +7,7 @@
           <!-- Logo -->
           <div class="flex-shrink-0">
             <NuxtLink to="/" class="flex items-center space-x-3">
-              <img src="/images/logo.png" alt="PROSEN" class="h-10 w-auto" />
+              <img src="/images/Logo-Prosen-Securite.png" alt="PROSEN" class="h-14 w-auto" />
               <span class="text-2xl font-bold bg-gradient-to-r from-[#111829] to-[#23c55e] bg-clip-text text-transparent">
                 PROSEN
               </span>
@@ -437,11 +437,70 @@
         </div>
       </div>
     </footer>
+
+    <!-- Widget WhatsApp -->
+    <div 
+      class="fixed right-6 z-50 transition-all duration-300"
+      :class="showScrollTop ? 'bottom-24' : 'bottom-6'"
+    >
+      <!-- Tooltip -->
+      <transition
+        enter-active-class="transition duration-200 ease-out"
+        enter-from-class="opacity-0 scale-95"
+        enter-to-class="opacity-100 scale-100"
+        leave-active-class="transition duration-200 ease-in"
+        leave-from-class="opacity-100 scale-100"
+        leave-to-class="opacity-0 scale-95"
+      >
+        <div 
+          v-show="showWhatsappTooltip"
+          class="absolute right-full bottom-0 mr-4 mb-2 bg-white rounded-xl shadow-lg p-4 w-64"
+        >
+          <p class="text-gray-700 text-sm">Discutez avec nous sur WhatsApp !</p>
+          <div class="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-3 h-3 bg-white"></div>
+        </div>
+      </transition>
+
+      <!-- Bouton WhatsApp -->
+      <a 
+        :href="whatsappLink"
+        target="_blank"
+        rel="noopener noreferrer"
+        @mouseenter="showWhatsappTooltip = true"
+        @mouseleave="showWhatsappTooltip = false"
+        class="block p-3 bg-[#25D366] text-white rounded-xl shadow-lg hover:bg-[#20bd5a] transform hover:-translate-y-1 transition-all duration-300 animate-bounce-subtle"
+        aria-label="Nous contacter sur WhatsApp"
+      >
+        <font-awesome-icon 
+          :icon="faWhatsapp"
+          class="w-6 h-6"
+        />
+      </a>
+    </div>
+
+    <!-- Bouton retour en haut -->
+    <transition
+      enter-active-class="transition duration-200 ease-out"
+      enter-from-class="opacity-0 translate-y-4"
+      enter-to-class="opacity-100 translate-y-0"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="opacity-100 translate-y-0"
+      leave-to-class="opacity-0 translate-y-4"
+    >
+      <button
+        v-show="showScrollTop"
+        @click="scrollToTop"
+        class="fixed right-6 bottom-6 z-50 p-3 bg-[#23c55e] text-white rounded-xl shadow-lg hover:bg-[#1ea550] transform hover:-translate-y-1 transition-all duration-300"
+        aria-label="Retour en haut"
+      >
+        <ArrowUpIcon class="w-6 h-6" />
+      </button>
+    </transition>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { 
   Bars3Icon, 
   XMarkIcon,
@@ -458,7 +517,8 @@ import {
   TruckIcon,
   ChevronUpIcon,
   BuildingOfficeIcon,
-  NewspaperIcon
+  NewspaperIcon,
+  ArrowUpIcon
 } from '@heroicons/vue/24/outline'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -466,7 +526,8 @@ import {
   faFacebookF,
   faTwitter,
   faLinkedinIn,
-  faInstagram 
+  faInstagram,
+  faWhatsapp 
 } from '@fortawesome/free-brands-svg-icons'
 
 const isMenuOpen = ref(false)
@@ -474,6 +535,35 @@ const showServicesMenu = ref(false)
 const mobileServicesOpen = ref(false)
 const showDiscoverMenu = ref(false)
 const mobileDiscoverOpen = ref(false)
+const showScrollTop = ref(false)
+const showWhatsappTooltip = ref(false)
+
+// Message prédéfini pour WhatsApp
+const whatsappMessage = "Bonjour PROSEN, je souhaite avoir plus d'informations sur vos services."
+const whatsappLink = `https://wa.me/221765984214?text=${encodeURIComponent(whatsappMessage)}`
+
+// Fonction pour gérer l'affichage du bouton de retour en haut
+const handleScroll = () => {
+  showScrollTop.value = window.scrollY > 500
+}
+
+// Fonction pour remonter en haut de la page
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
+
+// Ajout des écouteurs d'événements au montage du composant
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+// Nettoyage des écouteurs d'événements au démontage du composant
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 
 const menuItems = [
   { name: 'Accueil', path: '/' },
@@ -493,23 +583,13 @@ const footerLinks = [
 const socials = [
   { 
     name: 'Facebook', 
-    url: 'https://facebook.com', 
+    url: 'https://www.facebook.com/profile.php?id=61573887366457', 
     icon: faFacebookF
   },
   { 
-    name: 'Twitter', 
-    url: 'https://twitter.com', 
-    icon: faTwitter
-  },
-  { 
     name: 'LinkedIn', 
-    url: 'https://linkedin.com', 
+    url: 'https://linkedin.com/company/prosen-sn', 
     icon: faLinkedinIn
-  },
-  { 
-    name: 'Instagram', 
-    url: 'https://instagram.com', 
-    icon: faInstagram
   }
 ]
 
@@ -534,5 +614,25 @@ const services = [
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Animation subtile de rebond pour le bouton WhatsApp */
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s infinite;
+}
+
+/* Animation de pulse pour attirer l'attention */
+.animate-bounce-subtle:hover {
+  animation: none;
+  transform: scale(1.1);
 }
 </style>

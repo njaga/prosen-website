@@ -207,6 +207,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { navigateTo } from '#app'
 import {
   MapPinIcon,
   EnvelopeIcon,
@@ -280,6 +281,9 @@ const handleSubmit = async () => {
       if ($analytics) {
         $analytics.trackEvent('Formulaire', 'Soumission', 'Contact', 1);
       }
+
+      // Redirection vers la page de confirmation
+      navigateTo('/contact-confirmation');
     } else {
       submitStatus.value = {
         success: false,

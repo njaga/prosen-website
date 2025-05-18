@@ -1,0 +1,10 @@
+[{"id":1,"titre":"Agent de sécurité","slug":"agent-de-securite","categorie":"agent","resume":"Nous recherchons des agents de sécurité professionnels pour assurer la protection de nos clients.","date":"2023-12-05","lieu":"Dakar","type_contrat":"cdi","experience":"1-2","competences":[{"Competence":"Surveillance"},{"Competence":"Premiers secours"}],"avantages":[{"Avantage":"Formation continue"},{"Avantage":"Prime de risque"},{"Avantage":"Assurance santé"}]},{"id":2,"titre":"Technicien de maintenance","slug":"technicien-maintenance","categorie":"technique","resume":"Rejoignez notre équipe technique pour assurer la maintenance de nos systèmes de sécurité.","date":"2023-12-10","lieu":"Dakar","type_contrat":"cdi","experience":"3-5","competences":[{"Competence":"Électronique"},{"Competence":"Informatique"}],"avantages":[{"Avantage":"Véhicule de fonction"},{"Avantage":"Formation technique"}]},{"id":3,"titre":"Superviseur de site","slug":"superviseur-site","categorie":"superviseur","resume":"Nous recherchons un superviseur expérimenté pour gérer une équipe d
+agents
+sur
+un
+site
+sensible.,date:2023-12-15,lieu:Thiès,type_contrat:cdi,experience:5+,competences:[{Competence:Management},{Competence:Gestion
+de
+crise}],avantages:[{Avantage:Salaire
+compétitif},{Avantage:Possibilité
+dévolution"}]}]
